@@ -17,12 +17,12 @@ export function mountReviewWorkbench(getContext){
   dialog.innerHTML=`<header><h2>人工复核工作台</h2><button data-close>保存并退出</button></header>
   <p>独立任务，不修改原标注。纯人工不载入机器候选。此处不显示参考答案。 <a href="./review-guide.html" target="_blank" rel="noopener">实验与计时说明</a></p>
   <div class="review-setup"><label>模式<select data-mode><option value="manual">纯人工</option><option value="assisted">工具辅助</option></select></label><label>开始秒<input data-start type="number" min="0" value="0"></label><label>结束秒<input data-end type="number" min="0"></label><button data-begin>开始新任务</button><button data-resume>恢复上次任务</button></div>
-  <div class="review-setup"><button data-archive-list>刷新本录像归档</button><select data-archive aria-label="已归档的复核任务"></select><button data-archive-restore>恢复所选归档</button></div>
+  <details><summary>本地任务归档</summary><div class="review-setup"><button data-archive-list>刷新本录像归档</button><select data-archive aria-label="已归档的复核任务"></select><button data-archive-restore>恢复所选归档</button></div></details>
   <p data-trial-saved>未登记任务</p>
   <p data-candidate-status></p>
   <p data-save-status role="alert"></p><button data-legacy-export hidden>原样导出旧版任务（未核验内容）</button>
-  <label>导入任务备份（当前录像）<input data-task-import type="file" accept=".json,application/json"></label>
-  <details open><summary>新任务的对照实验登记（当前任务采用开始时的登记值）</summary><div class="review-setup">
+  <details><summary>导入任务备份</summary><label>当前录像的备份文件<input data-task-import type="file" accept=".json,application/json"></label></details>
+  <details data-registration open><summary>新任务的对照实验登记（当前任务采用开始时的登记值）</summary><div class="review-setup">
   <label>匿名操作者编号<input data-operator maxlength="80" placeholder="例如 P01"></label>
   <label>对照组编号<input data-pair maxlength="80" placeholder="例如 pair01"></label>
   <label>本人的实验次序<input data-order type="number" min="1" value="1"></label>
@@ -128,6 +128,7 @@ export function mountReviewWorkbench(getContext){
     if(old){const saved=JSON.parse(old),oldSession=saved.session??saved;localStorage.setItem(`courtvision-review-archive:${oldSession.id}`,old);}
     comparison.clear();
     clearEventForm();
+    q('[data-registration]').open=false;
     session=next;session.operator=next.trial.operator;evaluation=null;lockSha256=null;selected=null;playback=null;player.pause();player.currentTime=start;persist();render();message('任务已开始；从审核到补漏的所有主动操作都会计时。');
   }catch(e){message(e.message);}};
   async function restore(storageKey,imported=null){const request=++revision;try{
@@ -206,15 +207,17 @@ export function mountReviewWorkbench(getContext){
   function close(){tick();if(session)session.paused=true;player.pause();playback=null;if(!persist()){message('为避免丢失数据，暂不退出。请先导出任务或等待摘要完成。');return;}revision++;dialog.close();}
   q('[data-close]').onclick=close;dialog.addEventListener('cancel',e=>{e.preventDefault();close();});
   document.addEventListener('visibilitychange',()=>{tick(previousVisibility&&dialog.open);previousVisibility=!document.hidden;playback=null;if(document.hidden)player.pause();persist();});
-  for(const event of ['seeking','pause','waiting','ratechange','playing'])player.addEventListener(event,()=>{playback=null;});
-  player.addEventListener('timeupdate',()=>{
+  for(const event of ['seeking','pause','waiting','ratechange'])player.addEventListener(event,()=>{playback=null;});
+  function samplePlayback(){
     q('[data-position]').textContent=`录像 ${formatTime(player.currentTime)}`;
     if(!session){playback=null;return;}
     const step=reviewPlaybackStep(playback,{time:player.currentTime,wallMs:performance.now(),rate:player.playbackRate,active:session.status==='active'&&session.phase==='sweep'&&!session.paused,visible:!document.hidden&&dialog.open,playing:!player.paused,seeking:player.seeking},session.range);
     playback=step.previous;
     if(step.interval)session=addReviewCoverage(session,step.interval.start,step.interval.end);
-    if(player.currentTime>=session.range.end)player.pause();
-  });
+    if(player.currentTime>=session.range.end){player.pause();tick();persist();stats();}
+  }
+  player.addEventListener('timeupdate',samplePlayback);
+  player.addEventListener('playing',()=>{playback=null;samplePlayback();});
   setInterval(()=>{if(dialog.open&&session){tick();stats();persist();}},1000);
   document.addEventListener('keydown',e=>{if(!dialog.open)return;e.stopImmediatePropagation();if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)||e.ctrlKey||e.metaKey||e.altKey)return;const map={c:'confirm',e:'edit',d:'delete',m:'add',u:'undo',j:'prev',k:'next'};if(map[e.key.toLowerCase()]){e.preventDefault();q(`[data-${map[e.key.toLowerCase()]}]`).click();}if(e.code==='Space'){e.preventDefault();player.paused?player.play().catch(err=>message(err.message)):player.pause();}},true);
 }

@@ -221,4 +221,5 @@ footer { padding: 28px 0 0; text-align: center; color: #58615d; font-size: 10px;
 .review-dialog button:disabled,.review-dialog textarea:disabled{opacity:.55;cursor:not-allowed}.review-dialog [data-save-status]{color:#ffce84}
 .review-dialog input:focus-visible,.review-dialog textarea:focus-visible,.review-dialog select:focus-visible{outline:3px solid #64c8ff;outline-offset:2px}
 .review-dialog [data-error-list]{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}.review-dialog [data-error-list] button{text-align:left}
+.review-dialog a{color:#79d0ff}.review-dialog>details{margin:8px 0}.review-dialog summary{cursor:pointer}
 @media(max-width:760px){.review-grid{grid-template-columns:1fr}.review-dialog{padding:12px}.review-dialog input{max-width:135px}}
