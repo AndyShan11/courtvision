@@ -217,6 +217,11 @@ export function mountReviewWorkbench(getContext){
   function close(){tick();if(session)session.paused=true;player.pause();playback=null;if(!persist()){message('为避免丢失数据，暂不退出。请先导出任务或等待摘要完成。');return;}revision++;dialog.close();}
   q('[data-close]').onclick=close;dialog.addEventListener('cancel',e=>{e.preventDefault();close();});
   document.addEventListener('visibilitychange',()=>{tick(previousVisibility&&dialog.open);previousVisibility=!document.hidden;playback=null;if(document.hidden)player.pause();persist();});
+  document.defaultView.addEventListener('beforeunload',event=>{
+    if(!session)return;
+    tick();
+    if(!persist()){event.preventDefault();event.returnValue='';}
+  });
   document.defaultView.addEventListener('storage',event=>{
     if(!dialog.open||!session||storageConflict||(event.key!==null&&event.key!==key()))return;
     // Another tab changed/deleted this task (or cleared storage). Keep this copy exportable.
