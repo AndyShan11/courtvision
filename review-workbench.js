@@ -66,6 +66,7 @@ export function mountReviewWorkbench(getContext){
     const warning=q('[data-timing-warning]'),gap=session?.unmeasuredGapMs??0;
     warning.hidden=gap===0;warning.textContent=gap?`⚠ 检测到 ${(gap/1000).toFixed(1)} 秒计时中断，未计入主动时间。请在报告中说明卡顿或离开情况；不能把这段缺口算作省时收益。`:'';
     if(!session)return;const s=reviewSummary(session);q('[data-clock]').textContent=`${session.paused?'已暂停':'计时中'} · ${{review:'候选审核',sweep:'全段补漏',report:'整理报告'}[session.phase]} · 审核 ${(s.timingMs.review/1000).toFixed(1)}秒 / 补漏 ${(s.timingMs.sweep/1000).toFixed(1)}秒 / 报告 ${(s.timingMs.report/1000).toFixed(1)}秒`;q('[data-coverage]').textContent=`全段补漏播放覆盖 ${(s.coverageFraction*100).toFixed(1)}% · 待确认 ${s.pending} · 人工新增 ${s.manualAdditions}；覆盖不是注意力证明。`;q('[data-pause]').textContent=session.paused?'继续计时':'暂停计时';
+    if(session.status==='finished')q('[data-clock]').textContent='结果已锁定 · '+q('[data-clock]').textContent;
   }
   function render(){
     stats();
@@ -80,7 +81,6 @@ export function mountReviewWorkbench(getContext){
     for(const b of dialog.querySelectorAll('[data-phase]'))b.disabled=!active||(session.mode==='manual'&&b.dataset.phase==='review');
     q('[data-reference]').disabled=storageConflict||session?.status!=='finished'||!lockSha256;
     if(!session){q('[data-clock]').textContent='尚未开始';q('[data-coverage]').textContent='播放覆盖不是注意力证明；跳转不算观看。';}
-    else if(session.status==='finished')q('[data-clock]').textContent='结果已锁定 · '+q('[data-clock]').textContent;
     q('[data-evaluation]').textContent=evaluation?`匹配 ${evaluation.truePositives} / 参考 ${evaluation.referenceEvents}\n未匹配标记 ${evaluation.falsePositiveCount}；漏标 ${evaluation.falseNegativeCount}\n精确率 ${evaluation.precision==null?'—':(evaluation.precision*100).toFixed(1)+'%'}；召回率 ${evaluation.recall==null?'—':(evaluation.recall*100).toFixed(1)+'%'}\n${evaluation.warnings.join('\n')}\n参考独立性由导入者声明。`:'未核验正确率';
     q('[data-list]').innerHTML=session?[...session.events].sort((a,b)=>a.time-b.time).map(e=>`<button class="review-event ${e.id===selected?'selected':''}" data-event="${escapeHtml(e.id)}">${formatTime(e.time)} · ${escapeHtml(REVIEW_PROTOCOL.labels.find(l=>l.id===e.label)?.name)} · ${escapeHtml({pending:'待确认',confirmed:'已确认',deleted:'已删除'}[e.status])}${e.origin==='manual'?' · 人工新增':''}</button>`).join(''):'';
     if(evaluation)q('[data-evaluation]').textContent+='\n'+reviewErrorRateText(evaluation);
