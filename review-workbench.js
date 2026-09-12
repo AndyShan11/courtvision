@@ -1,4 +1,4 @@
-import {REVIEW_PROTOCOL} from './review-protocol.js';
+import {REVIEW_PROTOCOL,reviewEventIssues} from './review-protocol.js';
 import {createReviewSession,tickReview,changeReviewPhase,reviewAction,addReviewCoverage,reviewSummary,finishReview,validateStoredReview,updateReviewReport} from './review-session.js';
 import {evaluateReview,reviewReportText,reviewErrorRateText} from './review-evaluation.js';
 import {escapeHtml,formatTime} from './core.js';
@@ -72,7 +72,7 @@ export function mountReviewWorkbench(getContext){
     if(!session){q('[data-clock]').textContent='尚未开始';q('[data-coverage]').textContent='播放覆盖不是注意力证明；跳转不算观看。';}
     else if(!active)q('[data-clock]').textContent='结果已锁定 · '+q('[data-clock]').textContent;
     q('[data-evaluation]').textContent=evaluation?`匹配 ${evaluation.truePositives} / 参考 ${evaluation.referenceEvents}\n未匹配标记 ${evaluation.falsePositiveCount}；漏标 ${evaluation.falseNegativeCount}\n精确率 ${evaluation.precision==null?'—':(evaluation.precision*100).toFixed(1)+'%'}；召回率 ${evaluation.recall==null?'—':(evaluation.recall*100).toFixed(1)+'%'}\n${evaluation.warnings.join('\n')}\n参考独立性由导入者声明。`:'未核验正确率';
-    q('[data-list]').innerHTML=session?session.events.map(e=>`<button class="review-event ${e.id===selected?'selected':''}" data-event="${escapeHtml(e.id)}">${formatTime(e.time)} · ${escapeHtml(REVIEW_PROTOCOL.labels.find(l=>l.id===e.label)?.name)} · ${escapeHtml(e.status)}${e.origin==='manual'?' · 人工新增':''}</button>`).join(''):'';
+    q('[data-list]').innerHTML=session?[...session.events].sort((a,b)=>a.time-b.time).map(e=>`<button class="review-event ${e.id===selected?'selected':''}" data-event="${escapeHtml(e.id)}">${formatTime(e.time)} · ${escapeHtml(REVIEW_PROTOCOL.labels.find(l=>l.id===e.label)?.name)} · ${escapeHtml({pending:'待确认',confirmed:'已确认',deleted:'已删除'}[e.status])}${e.origin==='manual'?' · 人工新增':''}</button>`).join(''):'';
     if(evaluation)q('[data-evaluation]').textContent+='\n'+reviewErrorRateText(evaluation);
     renderErrors();
   }
@@ -82,11 +82,21 @@ export function mountReviewWorkbench(getContext){
     q('[data-error-page]').textContent=rows.length?` ${errorPage+1}/${pages}页 · 共${rows.length}项 `:' 尚无核验差异 ';
     q('[data-error-prev]').disabled=errorPage===0;q('[data-error-next]').disabled=errorPage>=pages-1;
   }
+  function clearEventForm(){
+    selected=null;errorPage=0;
+    for(const field of ['time','team','player','note'])q(`[data-${field}]`).value='';
+    q('[data-label]').value='shot';q('[data-result]').value='unknown';q('[data-reference]').value='';
+  }
   q('[data-error-prev]').onclick=()=>{errorPage--;renderErrors();};q('[data-error-next]').onclick=()=>{errorPage++;renderErrors();};
   q('[data-error-list]').onclick=event=>{const button=event.target.closest('[data-error-time]');if(!button||!session||session.status!=='finished')return;const time=Number(button.dataset.errorTime);if(!Number.isFinite(time)||time<session.range.start||time>=session.range.end)return;player.pause();playback=null;player.currentTime=Math.max(session.range.start,time-2);message('已定位差异前2秒；回看不会改动锁定数据或计时。');};
   function select(id){const e=session?.events.find(e=>e.id===id);if(!e)return;selected=id;for(const f of ['time','label','result','team','player','note'])q(`[data-${f}]`).value=e[f]??'';player.currentTime=Math.max(session.range.start,e.time-2);playback=null;render();}
-  function move(direction){const a=session?.events.filter(e=>e.status!=='deleted')??[];if(!a.length)return;const i=a.findIndex(e=>e.id===selected);select(a[(i+direction+a.length)%a.length].id);}
-  function mutate(action){try{if(!session)throw Error('请先开始任务');tick();session=reviewAction(session,action,session.lastTick);persist();render();message('已记录，可撤销。');}catch(e){message(e.message);}}
+  function move(direction){const a=session?.events.filter(e=>e.status!=='deleted').sort((a,b)=>a.time-b.time)??[];if(!a.length)return;const i=a.findIndex(e=>e.id===selected);select(a[i<0?(direction<0?a.length-1:0):(i+direction+a.length)%a.length].id);}
+  function mutate(action){try{
+    if(!session)throw Error('请先开始任务');
+    const target=action.type==='add'?action.event:action.type==='edit'?{...session.events.find(e=>e.id===action.id),...action.changes}:action.type==='confirm'?session.events.find(e=>e.id===action.id):null;
+    if(target&&reviewEventIssues(target).length)throw Error(reviewEventIssues(target).join('；'));
+    tick();session=reviewAction(session,action,session.lastTick);persist();render();message('已记录，可撤销。');
+  }catch(e){message(e.message);}}
   const fields=()=>({time:q('[data-time]').value.trim()===''?NaN:Number(q('[data-time]').value),label:q('[data-label]').value,result:q('[data-result]').value,team:q('[data-team]').value.trim(),player:q('[data-player]').value.trim(),note:q('[data-note]').value.trim()});
   launch.onclick=async()=>{
     const request=++revision,snapshot=getContext(),started=performance.now();
@@ -100,6 +110,7 @@ export function mountReviewWorkbench(getContext){
       try{q('[data-legacy-export]').hidden=context.mediaEvidence.logicalKey===context.videoIdentity||!localStorage.getItem(`courtvision-review-task:${context.mediaEvidence.logicalKey}`);}catch{q('[data-legacy-export]').hidden=true;}
       player.crossOrigin=context.crossOrigin||null;if(!context.crossOrigin)player.removeAttribute('crossorigin');player.src=context.src;
       q('[data-end]').value=Math.min(context.duration,300);session=null;selected=null;evaluation=null;lockSha256=null;playback=null;comparison.clear();
+      clearEventForm();q('[data-archive]').innerHTML='';
       message(identity.mediaEvidence.warning??'录像内容指纹核验完成');render();dialog.showModal();
     }catch(error){alert(error.message);}finally{launch.disabled=false;launch.textContent='人工复核与计时';}
   };
@@ -116,6 +127,7 @@ export function mountReviewWorkbench(getContext){
     const old=localStorage.getItem(key());
     if(old){const saved=JSON.parse(old),oldSession=saved.session??saved;localStorage.setItem(`courtvision-review-archive:${oldSession.id}`,old);}
     comparison.clear();
+    clearEventForm();
     session=next;session.operator=next.trial.operator;evaluation=null;lockSha256=null;selected=null;playback=null;player.pause();player.currentTime=start;persist();render();message('任务已开始；从审核到补漏的所有主动操作都会计时。');
   }catch(e){message(e.message);}};
   async function restore(storageKey,imported=null){const request=++revision;try{
@@ -131,6 +143,7 @@ export function mountReviewWorkbench(getContext){
     const restoredEvaluation=restored.status==='finished'&&reference?evaluateReview(restored,reference):null;
     if(session&&(session.id!==restored.id||imported)){tick();localStorage.setItem(`courtvision-review-archive:${session.id}:${crypto.randomUUID()}`,JSON.stringify({session,evaluation,lockSha256}));}
     session=restored;if(session.status==='active'){session.lastTick=Math.max(now(),session.lastTick);session.paused=true;}
+    clearEventForm();
     evaluation=restoredEvaluation;lockSha256=hash;selected=null;playback=null;player.pause();render();message(session.status==='finished'?'已恢复锁定结果；核验分数已重新计算。':'已恢复，当前暂停；点击继续计时。');
     persist();
   }catch(e){if(request===revision)message(e.message);}}
@@ -156,6 +169,7 @@ export function mountReviewWorkbench(getContext){
   for(const b of dialog.querySelectorAll('[data-phase]'))b.onclick=()=>{try{if(!session)throw Error('请先开始任务');tick();session=changeReviewPhase(session,b.dataset.phase,session.lastTick);playback=null;persist();render();}catch(e){message(e.message);}};
   q('[data-pause]').onclick=()=>{if(session?.status!=='active')return;tick();session.paused=!session.paused;player.pause();playback=null;persist();render();};
   q('[data-now]').onclick=()=>{q('[data-time]').value=player.currentTime.toFixed(3);};
+  q('[data-label]').onchange=()=>{if(reviewEventIssues({label:q('[data-label]').value,result:q('[data-result]').value}).length){q('[data-result]').value=['shot','free-throw'].includes(q('[data-label]').value)?'unknown':'not-applicable';message('已按标签调整结果选项，请再次核对。');}};
   q('[data-confirm]').onclick=()=>mutate({type:'confirm',id:selected});
   q('[data-edit]').onclick=()=>mutate({type:'edit',id:selected,changes:fields()});
   q('[data-delete]').onclick=()=>mutate({type:'delete',id:selected});

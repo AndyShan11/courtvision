@@ -1,6 +1,7 @@
 import {validateStoredReview,reviewSummary,reviewReportComplete} from './review-session.js';
 import {validateTrialMetadata} from './review-trial.js';
 import {evaluateReview} from './review-evaluation.js';
+import {reviewEventIssues} from './review-protocol.js';
 
 // Recompute from events + reference; never trust imported summary metrics.
 export function compareReviewTrials(first,second){
@@ -26,6 +27,7 @@ export function compareReviewTrials(first,second){
     if(r.trial.familiarity!=='unseen')reasons.push(`${name}未声明录像陌生`);
     if(r.summary.pending||r.summary.coverageFraction<.99)reasons.push(`${name}复核未完成`);
     if(!reviewReportComplete(r.session))reasons.push(`${name}报告未填写完整`);
+    if(r.session.events.some(e=>e.status==='confirmed'&&reviewEventIssues(e).length))reasons.push(`${name}存在标签与结果矛盾的事件`);
     if(r.session.unmeasuredGapMs>0)reasons.push(`${name}存在未计入主动时间的长间隔`);
     if(!r.evaluation)reasons.push(`${name}缺少独立参考答案`);
     else if(!r.evaluation.exhaustiveClaim)reasons.push(`${name}参考答案未声明完整`);

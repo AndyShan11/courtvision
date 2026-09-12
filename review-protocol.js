@@ -11,3 +11,9 @@ export const REVIEW_PROTOCOL = {
   checklist:['先确认有效比赛画面，排除回放和死球','定位动作时间并保留前后录像','核对事件类型、结果和球员；看不清留空或未知','检查重复标记及连续补篮','全段观看寻找机器漏检，不仅查看候选','报告列出未确认事件、未覆盖时段和样本限制'],
   sources:[{title:'FIBA统计员手册2024',url:'https://assets.fiba.basketball/image/upload/documents-corporate-fiba-statisticians-manual-2024.pdf'},{title:'Hudl人工与AI标注说明',url:'https://www.hudl.com/products/assist/faq'}]
 };
+export function reviewEventIssues(event){
+  const shooting=['shot','free-throw'].includes(event.label);
+  if(shooting&&event.result==='not-applicable')return ['投篮/罚球结果应为命中、未中或未知'];
+  if(!shooting&&['made','missed'].includes(event.result))return ['篮板/失误不能填写命中或未中'];
+  return [];
+}

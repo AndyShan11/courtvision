@@ -1,4 +1,4 @@
-import {REVIEW_PROTOCOL} from './review-protocol.js';
+import {REVIEW_PROTOCOL,reviewEventIssues} from './review-protocol.js';
 const clone=x=>JSON.parse(JSON.stringify(x));
 const finite=(v,label)=>{if(!Number.isFinite(v))throw Error(`无效${label}`);return v;};
 export function validateReviewEvent(event,range){
@@ -88,6 +88,8 @@ export function finishReview(session,now){
   if(summary.pending)next.completionWarnings.push(`还有${summary.pending}条待确认`);
   if(summary.coverageFraction<.99)next.completionWarnings.push('全段补漏播放覆盖不足99%');
   if(!reviewReportComplete(next))next.completionWarnings.push('教练报告四项尚未填写完整');
+  const inconsistent=next.events.filter(e=>e.status==='confirmed'&&reviewEventIssues(e).length).length;
+  if(inconsistent)next.completionWarnings.push(`${inconsistent}条已确认事件的标签与结果矛盾，需另建修正任务`);
   if(next.unmeasuredGapMs)next.completionWarnings.push(`计时出现${(next.unmeasuredGapMs/1000).toFixed(1)}秒长间隔，未计主动时间，需人工说明`);
   next.audit.push({action:'finish',at:now,warnings:[...next.completionWarnings]});return next;
 }

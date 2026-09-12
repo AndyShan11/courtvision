@@ -1,4 +1,4 @@
-import {REVIEW_PROTOCOL} from './review-protocol.js';
+import {REVIEW_PROTOCOL,reviewEventIssues} from './review-protocol.js';
 import {validateReviewEvent,reviewSummary,uncoveredReviewRanges} from './review-session.js';
 // Fixed before evaluation; never adapt tolerance to improve the reported score.
 export const REVIEW_MATCH_SECONDS=1;
@@ -18,7 +18,7 @@ export function validateReviewReference(reference,session){
   if(!Array.isArray(reference.events)||reference.events.length>10000)throw Error('参考答案事件列表无效');
   if(new Set(reference.events.map(e=>`${e?.label}:${e?.time}`)).size!==reference.events.length)throw Error('参考答案包含同标签同时间的重复事件');
   if(typeof reference.exhaustive!=='boolean'||typeof reference.provenance!=='string'||!reference.provenance.trim())throw Error('参考答案缺少完整性声明或来源');
-  for(const e of reference.events){validateReviewEvent(e,session.range);if(!reference.scope.includes(e.label))throw Error('参考事件超出声明标签范围');}
+  for(const e of reference.events){validateReviewEvent(e,session.range);if(reviewEventIssues(e).length)throw Error('参考事件标签与结果矛盾');if(!reference.scope.includes(e.label))throw Error('参考事件超出声明标签范围');}
   return reference;
 }
 export function evaluateReview(session,reference){
