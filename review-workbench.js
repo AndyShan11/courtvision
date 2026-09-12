@@ -211,11 +211,12 @@ export function mountReviewWorkbench(getContext){
   function close(){tick();if(session)session.paused=true;player.pause();playback=null;if(!persist()){message('为避免丢失数据，暂不退出。请先导出任务或等待摘要完成。');return;}revision++;dialog.close();}
   q('[data-close]').onclick=close;dialog.addEventListener('cancel',e=>{e.preventDefault();close();});
   document.addEventListener('visibilitychange',()=>{tick(previousVisibility&&dialog.open);previousVisibility=!document.hidden;playback=null;if(document.hidden)player.pause();persist();});
-  for(const event of ['seeking','pause','waiting','ratechange'])player.addEventListener(event,()=>{playback=null;});
+  for(const event of ['seeking','waiting','ratechange'])player.addEventListener(event,()=>{playback=null;});
+  player.addEventListener('pause',()=>{if(player.ended)samplePlayback();playback=null;});
   function samplePlayback(){
     q('[data-position]').textContent=`录像 ${formatTime(player.currentTime)}`;
     if(!session){playback=null;return;}
-    const step=reviewPlaybackStep(playback,{time:player.currentTime,wallMs:performance.now(),rate:player.playbackRate,active:session.status==='active'&&session.phase==='sweep'&&!session.paused,visible:!document.hidden&&dialog.open,playing:!player.paused,seeking:player.seeking},session.range);
+    const step=reviewPlaybackStep(playback,{time:player.currentTime,wallMs:performance.now(),rate:player.playbackRate,active:session.status==='active'&&session.phase==='sweep'&&!session.paused,visible:!document.hidden&&dialog.open,playing:!player.paused||player.ended,seeking:player.seeking},session.range);
     playback=step.previous;
     if(step.interval)session=addReviewCoverage(session,step.interval.start,step.interval.end);
     if(player.currentTime>=session.range.end){player.pause();tick();persist();stats();}
