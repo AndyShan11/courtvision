@@ -1,6 +1,7 @@
 // Trial metadata are declarations, not evidence that a real person performed a task.
 export function validateTrialMetadata(input,mode){
-  const text=(key,max=80)=>{if(typeof input[key]!=='string'||!input[key].trim()||input[key].length>max)throw Error(`请填写有效的${key}`);return input[key].trim();};
+  const names={operator:'匿名操作者编号',pairId:'对照组编号',deliveryStandard:'统一交付标准'};
+  const text=(key,max=80)=>{if(typeof input[key]!=='string'||!input[key].trim()||input[key].length>max)throw Error(`请填写${names[key]}（1–${max}字）`);return input[key].trim();};
   const operator=text('operator'),pairId=text('pairId'),deliveryStandard=text('deliveryStandard',200);
   if(!Number.isInteger(input.order)||input.order<1||input.order>10000)throw Error('实验次序须为正整数');
   if(!['unseen','seen','unknown'].includes(input.familiarity))throw Error('录像熟悉程度无效');
