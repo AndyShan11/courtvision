@@ -1,0 +1,3 @@
+*.json -text
+*.webm binary
+*.mp4 binary
