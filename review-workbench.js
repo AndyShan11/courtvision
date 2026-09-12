@@ -1,6 +1,6 @@
 import {REVIEW_PROTOCOL} from './review-protocol.js';
 import {createReviewSession,tickReview,changeReviewPhase,reviewAction,addReviewCoverage,reviewSummary,finishReview,validateStoredReview,updateReviewReport} from './review-session.js';
-import {evaluateReview,reviewReportText} from './review-evaluation.js';
+import {evaluateReview,reviewReportText,reviewErrorRateText} from './review-evaluation.js';
 import {escapeHtml,formatTime} from './core.js';
 import {validateTrialMetadata} from './review-trial.js';
 import {mountReviewComparison} from './review-comparison-ui.js';
@@ -64,6 +64,7 @@ export function mountReviewWorkbench(getContext){
     else if(!active)q('[data-clock]').textContent='结果已锁定 · '+q('[data-clock]').textContent;
     q('[data-evaluation]').textContent=evaluation?`匹配 ${evaluation.truePositives} / 参考 ${evaluation.referenceEvents}\n未匹配标记 ${evaluation.falsePositiveCount}；漏标 ${evaluation.falseNegativeCount}\n精确率 ${evaluation.precision==null?'—':(evaluation.precision*100).toFixed(1)+'%'}；召回率 ${evaluation.recall==null?'—':(evaluation.recall*100).toFixed(1)+'%'}\n${evaluation.warnings.join('\n')}\n参考独立性由导入者声明。`:'未核验正确率';
     q('[data-list]').innerHTML=session?session.events.map(e=>`<button class="review-event ${e.id===selected?'selected':''}" data-event="${escapeHtml(e.id)}">${formatTime(e.time)} · ${escapeHtml(REVIEW_PROTOCOL.labels.find(l=>l.id===e.label)?.name)} · ${escapeHtml(e.status)}${e.origin==='manual'?' · 人工新增':''}</button>`).join(''):'';
+    if(evaluation)q('[data-evaluation]').textContent+='\n'+reviewErrorRateText(evaluation);
   }
   function select(id){const e=session?.events.find(e=>e.id===id);if(!e)return;selected=id;for(const f of ['time','label','result','team','player','note'])q(`[data-${f}]`).value=e[f]??'';player.currentTime=Math.max(session.range.start,e.time-2);playback=null;render();}
   function move(direction){const a=session?.events.filter(e=>e.status!=='deleted')??[];if(!a.length)return;const i=a.findIndex(e=>e.id===selected);select(a[(i+direction+a.length)%a.length].id);}

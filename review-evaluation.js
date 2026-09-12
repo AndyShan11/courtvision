@@ -2,11 +2,20 @@ import {REVIEW_PROTOCOL} from './review-protocol.js';
 import {validateReviewEvent,reviewSummary,uncoveredReviewRanges} from './review-session.js';
 // Fixed before evaluation; never adapt tolerance to improve the reported score.
 export const REVIEW_MATCH_SECONDS=1;
+export function reviewErrorRates(evaluation){
+  const e=evaluation;
+  return {missRate:e.referenceEvents?e.falseNegativeCount/e.referenceEvents:null,unmatchedPredictionRate:e.predictions?e.falsePositiveCount/e.predictions:null,resultErrorRate:e.resultChecked?(e.resultWrong+e.resultUnknown)/e.resultChecked:null,completeReference:e.exhaustiveClaim===true};
+}
+export function reviewErrorRateText(evaluation){
+  const r=reviewErrorRates(evaluation),pct=x=>x===null?'无分母，未计算':`${(x*100).toFixed(1)}%`;
+  return `漏标率（漏标/参考事件）${pct(r.missRate)}；未匹配标记占比（未匹配/确认标记）${pct(r.unmatchedPredictionRate)}；结果错误率（错填+未知/已匹配且参考结果已知）${pct(r.resultErrorRate)}。${r.completeReference?'':'参考不完整，仅对已知参考计算，不能代表整段真实错误率。'}`;
+}
 export function validateReviewReference(reference,session){
   if(reference.schemaVersion!==1||reference.protocol!==REVIEW_PROTOCOL.version)throw Error('参考答案协议版本不一致');
   if(reference.videoIdentity!==session.videoIdentity||reference.range?.start!==session.range.start||reference.range?.end!==session.range.end)throw Error('参考答案录像或区间不一致');
   if(!Array.isArray(reference.scope)||!reference.scope.length||new Set(reference.scope).size!==reference.scope.length||reference.scope.some(l=>!REVIEW_PROTOCOL.labels.some(d=>d.id===l)))throw Error('参考答案标签范围无效');
   if(!Array.isArray(reference.events)||reference.events.length>10000)throw Error('参考答案事件列表无效');
+  if(new Set(reference.events.map(e=>`${e?.label}:${e?.time}`)).size!==reference.events.length)throw Error('参考答案包含同标签同时间的重复事件');
   if(typeof reference.exhaustive!=='boolean'||typeof reference.provenance!=='string'||!reference.provenance.trim())throw Error('参考答案缺少完整性声明或来源');
   for(const e of reference.events){validateReviewEvent(e,session.range);if(!reference.scope.includes(e.label))throw Error('参考事件超出声明标签范围');}
   return reference;
@@ -51,5 +60,6 @@ export function reviewReportText(session,evaluation=null){
   if(!evaluation)lines.push('未导入参考答案，不能声称错误率或省时效果。');
   else lines.push(`参考来源：${evaluation.referenceProvenance}（独立性未经系统核实）。`,`事件时间匹配：±${evaluation.toleranceSeconds}秒，按标签一对一。`,`匹配${evaluation.truePositives}；未匹配标记${evaluation.falsePositiveCount}；漏标${evaluation.falseNegativeCount}。`,`精确率${pct(evaluation.precision)}；召回率${pct(evaluation.recall)}；F1 ${pct(evaluation.f1)}。`,`可核对结果${evaluation.resultChecked}项，错结果${evaluation.resultWrong}项，结果未知${evaluation.resultUnknown}项。`,...evaluation.warnings.map(w=>`注意：${w}`));
   lines.push('','## 教练复盘（人工填写）',`1. 观察到的主要问题：${session.report?.observation||'未填写'}`,`2. 支持该判断的事件时间：${session.report?.evidence||'未填写'}`,`3. 建议训练动作：${session.report?.training||'未填写'}`,`4. 下一场要核验的指标：${session.report?.followUp||'未填写'}`,'','限制：样本标注不是整场官方统计；没有独立真人对照试验，不生成总体省时结论。');
+  if(evaluation)lines.push('',reviewErrorRateText(evaluation));
   return lines.join('\n');
 }

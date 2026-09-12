@@ -1,4 +1,5 @@
 import {compareReviewTrials} from './review-comparison.js';
+import {reviewErrorRateText} from './review-evaluation.js';
 export function comparisonText(result){
   const seconds=v=>v===null?'未测':`${(v/1000).toFixed(1)}秒`;
   const lines=['纯人工／工具辅助对照（单组描述）'];
@@ -6,6 +7,7 @@ export function comparisonText(result){
     lines.push(`\n${name}：${r.session.id}`,`审核 ${seconds(r.summary.timingMs.review)}；补漏 ${seconds(r.summary.timingMs.sweep)}；报告 ${seconds(r.summary.timingMs.report)}`,`主动合计 ${seconds(r.summary.activeMs)}；任务墙钟 ${seconds(r.summary.wallMs)}；任务前算法等待 ${seconds(r.trial.algorithmWaitMs)}`);
     const e=r.evaluation;
     lines.push(e?`匹配 ${e.truePositives}；未匹配标记 ${e.falsePositiveCount}；漏标 ${e.falseNegativeCount}；已匹配项结果错误 ${e.resultWrong}，未知 ${e.resultUnknown}`:'没有参考答案，错误率未知');
+    if(e)lines.push(reviewErrorRateText(e));
   }
   lines.push(`\n主动时间差（人工−辅助）：${seconds(result.activeDifferenceMs)}`,`辅助主动时间＋任务前等待：${seconds(result.assistedActivePlusPreWaitMs)}（不是总墙钟时间）`,result.interpretation,...result.reasons.map(r=>`注意：${r}`));
   lines.push(`身份准备耗时另列：人工 ${seconds(result.identityPreparationMs.manual)}；辅助 ${seconds(result.identityPreparationMs.assisted)}。不包含在上述主动合计。`);

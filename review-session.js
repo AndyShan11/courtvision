@@ -2,10 +2,12 @@ import {REVIEW_PROTOCOL} from './review-protocol.js';
 const clone=x=>JSON.parse(JSON.stringify(x));
 const finite=(v,label)=>{if(!Number.isFinite(v))throw Error(`无效${label}`);return v;};
 export function validateReviewEvent(event,range){
+  if(!event||typeof event!=='object')throw Error('事件格式无效');
   if(!REVIEW_PROTOCOL.labels.some(l=>l.id===event.label))throw Error('未知事件类型');
   if(!REVIEW_PROTOCOL.results.includes(event.result))throw Error('未知事件结果');
   finite(event.time,'事件时间');
   if(event.time<range.start||event.time>=range.end)throw Error('事件不在任务区间');
+  for(const [field,limit] of [['team',60],['player',60],['note',500]])if(event[field]!==undefined&&(typeof event[field]!=='string'||event[field].length>limit))throw Error(`事件${field}格式无效或过长`);
   return clone(event);
 }
 export function createReviewSession({id,mode,videoIdentity,start,end,candidates=[]},now){
@@ -31,22 +33,31 @@ export function changeReviewPhase(session,phase,now){
 export function reviewAction(session,action,now){
   if(session.status!=='active')throw Error('任务已结束');
   if(session.paused)throw Error('请先继续计时，再修改事件');
-  const next=tickReview(session,now),before=clone(next.events);
+  const next=tickReview(session,now);
   if(action.type==='undo'){
-    const previous=next.undo.pop();if(!previous)throw Error('没有可撤销操作');next.events=previous;
+    const previous=next.undo.pop();if(!previous)throw Error('没有可撤销操作');
+    if(Array.isArray(previous))next.events=previous; // Preserve legacy snapshot undo.
+    else if(previous.kind==='remove'){
+      const index=next.events.findIndex(e=>e.id===previous.id);if(index<0)throw Error('撤销目标不存在');next.events.splice(index,1);
+    }else if(previous.kind==='restore'){
+      const index=next.events.findIndex(e=>e.id===previous.event?.id);if(index<0)throw Error('撤销目标不存在');
+      next.events[index]=validateReviewEvent(previous.event,next.range);
+    }else throw Error('撤销记录无效');
   }else{
     const i=next.events.findIndex(e=>e.id===action.id);
     if(action.type==='add'){
       if(!action.id||i>=0)throw Error('事件编号重复或缺失');
       next.events.push({...validateReviewEvent(action.event,next.range),id:action.id,origin:'manual',status:'confirmed'});
+      next.undo.push({kind:'remove',id:action.id});
     }else{
       if(i<0)throw Error('事件不存在');
+      const previous=clone(next.events[i]);
       if(action.type==='confirm')next.events[i].status='confirmed';
       else if(action.type==='delete')next.events[i].status='deleted';
       else if(action.type==='edit')next.events[i]={...next.events[i],...validateReviewEvent({...next.events[i],...action.changes},next.range),id:next.events[i].id,origin:next.events[i].origin,status:'confirmed'};
       else throw Error('未知复核操作');
+      next.undo.push({kind:'restore',event:previous});
     }
-    next.undo.push(before);
   }
   next.audit.push({action:clone(action),at:now,phase:next.phase});return next;
 }
@@ -94,9 +105,17 @@ export function validateStoredReview(s,videoIdentity){
   if(s.identityPreparationMs!==undefined&&(!Number.isFinite(s.identityPreparationMs)||s.identityPreparationMs<0))throw Error('身份准备时间无效');
   if(s.mode==='manual'&&(s.phase==='review'||s.timing?.review!==0||s.events?.some(e=>e.origin==='candidate')))throw Error('纯人工任务包含机器审核记录');
   if(!Array.isArray(s.events)||s.events.length>10000||new Set(s.events.map(e=>e.id)).size!==s.events.length||!Array.isArray(s.audit)||!Array.isArray(s.undo)||!Array.isArray(s.coverage))throw Error('保存的任务记录无效');
-  for(const e of s.events){validateReviewEvent(e,s.range);if(typeof e.id!=='string'||!['pending','confirmed','deleted'].includes(e.status)||!['manual','candidate'].includes(e.origin))throw Error('保存的事件状态无效');}
+  const checkEvent=e=>{validateReviewEvent(e,s.range);if(typeof e.id!=='string'||!e.id||!['pending','confirmed','deleted'].includes(e.status)||!['manual','candidate'].includes(e.origin)||(s.mode==='manual'&&e.origin!=='manual'))throw Error('保存的事件状态无效');};
+  for(const e of s.events)checkEvent(e);
+  for(const undo of s.undo){
+    if(Array.isArray(undo)){if(new Set(undo.map(e=>e.id)).size!==undo.length)throw Error('撤销快照编号重复');for(const e of undo)checkEvent(e);}
+    else if(undo?.kind==='restore')checkEvent(undo.event);
+    else if(undo?.kind!=='remove'||typeof undo.id!=='string'||!undo.id)throw Error('保存的撤销记录无效');
+  }
+  if(s.report!==undefined){if(!s.report||typeof s.report!=='object'||Array.isArray(s.report))throw Error('保存的报告无效');for(const [field,value] of Object.entries(s.report))if(!['observation','evidence','training','followUp'].includes(field)||typeof value!=='string'||value.length>3000)throw Error('保存的报告字段无效');}
   for(const t of ['createdAt','lastTick'])finite(s[t],'保存时间');
   if(s.lastTick<s.createdAt||!s.timing||['review','sweep','report'].some(k=>!Number.isFinite(s.timing[k])||s.timing[k]<0))throw Error('保存的计时无效');
+  if(['review','sweep','report'].reduce((sum,k)=>sum+s.timing[k],0)>s.lastTick-s.createdAt+1e-6)throw Error('主动时间超过任务墙钟时间');
   let end=s.range.start;for(const c of s.coverage){if(!Number.isFinite(c.start)||!Number.isFinite(c.end)||c.start<end||c.end<=c.start||c.end>s.range.end)throw Error('保存的播放覆盖无效');end=c.end;}
   if(s.status==='finished'&&(!Number.isFinite(s.completedAt)||s.completedAt!==s.lastTick||s.completedAt<s.createdAt||!s.paused||!Array.isArray(s.completionWarnings)))throw Error('保存的锁定状态无效');
   return clone(s);
