@@ -1,5 +1,6 @@
 import {sha256Blob} from './sha256-stream.js';
 const hashes=new WeakMap();
+export function reviewSourceReady(video,expectedSource){return Boolean(expectedSource&&video.readyState>=1&&video.currentSrc===expectedSource&&Number.isFinite(video.duration)&&video.duration>0);}
 export async function reviewMediaIdentity(context,{assertCurrent=()=>{},onProgress=()=>{}}={}){
   if(context.blob){
     assertCurrent();let hash=hashes.get(context.blob);

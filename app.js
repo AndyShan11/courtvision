@@ -15,6 +15,7 @@ import { truthPathFor } from "./truth-catalog.js";
 import { collectFrozenBatch } from "./frozen-batch.js";
 import { mountReviewWorkbench } from "./review-workbench.js";
 import { captureReviewCandidates } from "./review-candidates.js";
+import { reviewSourceReady } from "./review-media.js";
 
 const $ = (selector) => document.querySelector(selector);
 let frozenCatalog = [];
@@ -32,6 +33,7 @@ const state = {
   videoSourcePath: null,
   reviewBlob: null,
   reviewCandidateRun: null,
+  reviewExpectedSrc: null,
   hoop: loadHoop(),
   calibratingHoop: false,
   viewReference: null,
@@ -77,6 +79,7 @@ function loadDatasets() {
 }
 
 function switchDataset(key) {
+  state.reviewExpectedSrc = null;
   state.reviewCandidateRun = null;
   state.reviewBlob = null;
   datasetRevision += 1;
@@ -343,6 +346,7 @@ function download(name, content, type) {
 let videoLoadSequence = 0;
 const deliveryConfig = fetch('/courtvision/sample-delivery.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
 async function loadVideoSource(src, name, meta) {
+  state.reviewExpectedSrc = null;
   const sequence = ++videoLoadSequence;
   state.videoSourcePath = src;
   window.location.hash = 'workspace'; showPage();
@@ -382,11 +386,14 @@ async function loadVideoSource(src, name, meta) {
         if (sequence !== videoLoadSequence) { indexedFrames.forget(blobUrl); URL.revokeObjectURL(blobUrl); return; }
         video.removeAttribute('crossorigin');
         video.src = blobUrl;
+        state.reviewBlob = blob;
+        state.reviewExpectedSrc = video.src;
       } catch (error) { indexedFrames.forget(blobUrl); URL.revokeObjectURL(blobUrl); throw error; }
     } else {
       if (delivery?.url) { video.crossOrigin = 'anonymous'; $('#videoMeta').textContent = 'HCTV · CC BY 4.0 · 原始站点 VP9 转码 · 需联网'; }
       else video.removeAttribute('crossorigin');
       video.src = delivery?.url || src;
+      state.reviewExpectedSrc = video.src;
     }
   } catch (error) {
     if (sequence === videoLoadSequence) { $('#analysisStatus').textContent = error.message; notify(error.message); }
@@ -1238,7 +1245,7 @@ document.addEventListener("keydown", (event) => {
 
 populateOptions();
 render();
-mountReviewWorkbench(()=>({src:video.currentSrc||video.src,duration:video.duration,crossOrigin:video.crossOrigin,videoIdentity:state.videoKey,blob:state.reviewBlob,candidateRun:state.reviewCandidateRun,pause:()=>video.pause(),candidates:state.reviewCandidateRun?.candidates??state.segments.filter(e=>['camera-pan','shot-roi'].includes(e.source)&&e.status==='待确认'&&Number.isFinite(e.peakTime)).map(e=>({time:e.peakTime,label:'shot',result:'unknown',note:`机器候选：${e.source}`}))}));
+mountReviewWorkbench(()=>({src:reviewSourceReady(video,state.reviewExpectedSrc)?video.currentSrc:null,duration:video.duration,crossOrigin:video.crossOrigin,videoIdentity:state.videoKey,blob:state.reviewBlob,candidateRun:state.reviewCandidateRun,pause:()=>video.pause(),candidates:state.reviewCandidateRun?.candidates??state.segments.filter(e=>['camera-pan','shot-roi'].includes(e.source)&&e.status==='待确认'&&Number.isFinite(e.peakTime)).map(e=>({time:e.peakTime,label:'shot',result:'unknown',note:`机器候选：${e.source}`}))}));
 
 function showPage() {
   const page = ["workspace", "segments", "report"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "workspace";
