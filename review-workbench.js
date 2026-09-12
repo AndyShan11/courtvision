@@ -44,7 +44,7 @@ export function mountReviewWorkbench(getContext){
   reportForm.innerHTML='<legend>教练报告（填写时切换为报告计时）</legend><label>观察到的主要问题<textarea data-report-field="observation" maxlength="3000"></textarea></label><label>支持判断的录像时间与事件<textarea data-report-field="evidence" maxlength="3000"></textarea></label><label>建议训练动作<textarea data-report-field="training" maxlength="3000"></textarea></label><label>下一场核验指标<textarea data-report-field="followUp" maxlength="3000"></textarea></label>';
   dialog.querySelector('[data-status]').before(reportForm);
   const comparison=mountReviewComparison(dialog);
-  const q=s=>dialog.querySelector(s),player=q('[data-video]');let session=null,selected=null,playback=null,context=null,evaluation=null,lockSha256=null,revision=0,errorPage=0;
+  const q=s=>dialog.querySelector(s),player=q('[data-video]');let session=null,selected=null,playback=null,context=null,evaluation=null,lockSha256=null,revision=0,errorPage=0,storageConflict=false;
   const digest=async data=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',data))].map(b=>b.toString(16).padStart(2,'0')).join('');
   const download=(name,data,type='application/json')=>{const url=URL.createObjectURL(new Blob([data],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
   const now=()=>Date.now();
@@ -53,6 +53,7 @@ export function mountReviewWorkbench(getContext){
   const message=s=>{q('[data-status]').textContent=s;};
   function persist(){
     if(!session)return true;
+    if(storageConflict){q('[data-save-status]').textContent='⚠ 另一窗口更改了本录像任务，已停止自动保存。请导出本窗口任务备份，再刷新页面选择要继续的记录；不要直接刷新丢失未保存内容。';return false;}
     if(session.status==='finished'&&!lockSha256){q('[data-save-status]').textContent='正在生成锁定摘要；此时请勿刷新页面。';return false;}
     try{localStorage.setItem(key(),JSON.stringify({session,evaluation,lockSha256}));q('[data-save-status]').textContent='当前任务已保存到本浏览器；仍建议导出备份。';return true;}
     catch{q('[data-save-status]').textContent='⚠ 本地保存失败！当前修改仅在内存，请立即导出任务，勿关闭或刷新。';return false;}
@@ -65,16 +66,18 @@ export function mountReviewWorkbench(getContext){
   }
   function render(){
     stats();
+    dialog.dataset.reviewActive=String(session?.status==='active');
     q('[data-candidate-status]').textContent=session?.mode==='assisted'?`候选来源：${session.candidateProvenance?.kind??'未记录'}。${session.candidateProvenance?.warning??''}`:'';
     q('[data-trial-saved]').textContent=session?.trial?`当前任务登记：${session.trial.operator} / ${session.trial.pairId} / 次序${session.trial.order} / 熟悉度${session.trial.familiarity} / ${session.trial.performer}；标准：${session.trial.deliveryStandard}`:'当前没有已登记任务；下方字段只用于开始新任务。';
-    const active=session?.status==='active';
+    const active=session?.status==='active'&&!storageConflict;
+    for(const name of ['begin','resume','archive-restore','task-import'])q(`[data-${name}]`).disabled=storageConflict;
     for(const input of dialog.querySelectorAll('[data-report-field]')){input.disabled=!active||session.paused;if(document.activeElement!==input)input.value=session?.report?.[input.dataset.reportField]??'';}
     for(const name of ['confirm','edit','delete','add','undo','pause','finish'])q(`[data-${name}]`).disabled=!active;
     for(const name of ['confirm','edit','delete','add','undo'])q(`[data-${name}]`).disabled=!active||session.paused;
     for(const b of dialog.querySelectorAll('[data-phase]'))b.disabled=!active||(session.mode==='manual'&&b.dataset.phase==='review');
-    q('[data-reference]').disabled=session?.status!=='finished'||!lockSha256;
+    q('[data-reference]').disabled=storageConflict||session?.status!=='finished'||!lockSha256;
     if(!session){q('[data-clock]').textContent='尚未开始';q('[data-coverage]').textContent='播放覆盖不是注意力证明；跳转不算观看。';}
-    else if(!active)q('[data-clock]').textContent='结果已锁定 · '+q('[data-clock]').textContent;
+    else if(session.status==='finished')q('[data-clock]').textContent='结果已锁定 · '+q('[data-clock]').textContent;
     q('[data-evaluation]').textContent=evaluation?`匹配 ${evaluation.truePositives} / 参考 ${evaluation.referenceEvents}\n未匹配标记 ${evaluation.falsePositiveCount}；漏标 ${evaluation.falseNegativeCount}\n精确率 ${evaluation.precision==null?'—':(evaluation.precision*100).toFixed(1)+'%'}；召回率 ${evaluation.recall==null?'—':(evaluation.recall*100).toFixed(1)+'%'}\n${evaluation.warnings.join('\n')}\n参考独立性由导入者声明。`:'未核验正确率';
     q('[data-list]').innerHTML=session?[...session.events].sort((a,b)=>a.time-b.time).map(e=>`<button class="review-event ${e.id===selected?'selected':''}" data-event="${escapeHtml(e.id)}">${formatTime(e.time)} · ${escapeHtml(REVIEW_PROTOCOL.labels.find(l=>l.id===e.label)?.name)} · ${escapeHtml({pending:'待确认',confirmed:'已确认',deleted:'已删除'}[e.status])}${e.origin==='manual'?' · 人工新增':''}</button>`).join(''):'';
     if(evaluation)q('[data-evaluation]').textContent+='\n'+reviewErrorRateText(evaluation);
@@ -119,6 +122,7 @@ export function mountReviewWorkbench(getContext){
     }catch(error){alert(error.message);}finally{launch.disabled=false;launch.textContent='人工复核与计时';}
   };
   q('[data-begin]').onclick=()=>{try{
+    if(storageConflict)throw Error('请先导出冲突任务，再刷新页面');
     revision++;
     if(localStorage.getItem(key())&&!confirm('开始新任务会替换当前保存位置。旧任务将留在本机归档，但建议先导出。继续？'))return;
     if(!q('[data-start]').value.trim()||!q('[data-end]').value.trim())throw Error('请填写完整区间');
@@ -136,6 +140,7 @@ export function mountReviewWorkbench(getContext){
     session=next;session.operator=next.trial.operator;evaluation=null;lockSha256=null;selected=null;playback=null;player.pause();player.currentTime=start;persist();render();message('任务已开始；从审核到补漏的所有主动操作都会计时。');
   }catch(e){message(e.message);}};
   async function restore(storageKey,imported=null){const request=++revision;try{
+    if(storageConflict)throw Error('请先导出冲突任务，再刷新页面');
     tick();persist();
     const saved=imported??JSON.parse(localStorage.getItem(storageKey));
     const restored=validateStoredReview(saved?.session??saved,context.videoIdentity);
@@ -187,9 +192,10 @@ export function mountReviewWorkbench(getContext){
     if(!confirm('结束后不能修改本次结果。补漏检查是否已完成？未完成也会保留警告。'))return;
     tick();persist();const request=++revision;
     session=finishReview(session,session.lastTick);player.pause();playback=null;render();
-    const id=session.id,hash=await digest(new TextEncoder().encode(JSON.stringify(session)));
-    if(request!==revision||session?.id!==id)return;
-    lockSha256=hash;persist();render();message('结果已锁定，可导入参考答案。'+session.completionWarnings.join('；'));
+    const id=session.id,lockedBytes=JSON.stringify(session),hash=await digest(new TextEncoder().encode(lockedBytes));
+    // A storage conflict must stop writing, not strand an otherwise unchanged locked backup.
+    if(session?.id!==id||(request!==revision&&!(storageConflict&&JSON.stringify(session)===lockedBytes)))return;
+    lockSha256=hash;persist();render();message((storageConflict?'结果已锁定；请先导出冲突备份。':'结果已锁定，可导入参考答案。')+session.completionWarnings.join('；'));
   }catch(e){message(e.message);}};
   q('[data-reference-template]').onclick=()=>{if(!session)return;download(`reference-template-${session.id}.json`,JSON.stringify({schemaVersion:1,protocol:session.protocol,videoIdentity:session.videoIdentity,range:session.range,scope:['shot'],exhaustive:false,provenance:'请填写独立标注来源；此文件本身不是答案',events:[]},null,2));};
   q('[data-reference]').onchange=async e=>{const request=++revision;try{
@@ -211,6 +217,12 @@ export function mountReviewWorkbench(getContext){
   function close(){tick();if(session)session.paused=true;player.pause();playback=null;if(!persist()){message('为避免丢失数据，暂不退出。请先导出任务或等待摘要完成。');return;}revision++;dialog.close();}
   q('[data-close]').onclick=close;dialog.addEventListener('cancel',e=>{e.preventDefault();close();});
   document.addEventListener('visibilitychange',()=>{tick(previousVisibility&&dialog.open);previousVisibility=!document.hidden;playback=null;if(document.hidden)player.pause();persist();});
+  document.defaultView.addEventListener('storage',event=>{
+    if(!dialog.open||!session||storageConflict||(event.key!==null&&event.key!==key()))return;
+    // Another tab changed/deleted this task (or cleared storage). Keep this copy exportable.
+    tick();if(session.status==='active')session.paused=true;
+    storageConflict=true;revision++;player.pause();playback=null;render();persist();
+  });
   for(const event of ['seeking','waiting','ratechange'])player.addEventListener(event,()=>{playback=null;});
   player.addEventListener('pause',()=>{if(player.ended)samplePlayback();playback=null;});
   function samplePlayback(){

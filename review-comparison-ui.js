@@ -22,7 +22,7 @@ export function mountReviewComparison(parent){
     const current=++revision;report=null;button.disabled=true;output.textContent='检查中…';
     try{
       // Current-task gate supplied by the workbench via DOM state; no task data exposed.
-      if(!parent.querySelector('[data-finish]').disabled)throw Error('请先结束当前复核任务，防止查看答案影响盲测');
+      if(parent.dataset.reviewActive==='true'||!parent.querySelector('[data-finish]').disabled)throw Error('请先结束当前复核任务，防止查看答案影响盲测');
       const files=[...input.files];if(files.length!==2)throw Error('请一次选择两份任务文件');
       const bundles=[];
       for(const file of files){
@@ -35,7 +35,7 @@ export function mountReviewComparison(parent){
         bundles.push(bundle);
       }
       if(current!==revision)return;
-      if(!parent.querySelector('[data-finish]').disabled)throw Error('已开始新任务，对照结果不显示');
+      if(parent.dataset.reviewActive==='true'||!parent.querySelector('[data-finish]').disabled)throw Error('已开始新任务，对照结果不显示');
       report=comparisonText(compareReviewTrials(...bundles));output.textContent=report;button.disabled=false;
     }catch(error){if(current===revision)output.textContent=error.message;}
     finally{if(current===revision)input.value='';}
