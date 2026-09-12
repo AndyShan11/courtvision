@@ -1,5 +1,5 @@
 import {REVIEW_PROTOCOL,reviewEventIssues} from './review-protocol.js';
-import {createReviewSession,tickReview,changeReviewPhase,reviewAction,addReviewCoverage,reviewSummary,finishReview,validateStoredReview,updateReviewReport} from './review-session.js';
+import {createReviewSession,tickReview,changeReviewPhase,reviewAction,addReviewCoverage,reviewSummary,finishReview,validateStoredReview,updateReviewReport,uncoveredReviewRanges} from './review-session.js';
 import {evaluateReview,reviewReportText,reviewErrorRateText} from './review-evaluation.js';
 import {escapeHtml,formatTime} from './core.js';
 import {validateTrialMetadata} from './review-trial.js';
@@ -33,6 +33,7 @@ export function mountReviewWorkbench(getContext){
   </div><p>纯人工等待为0。辅助等待为人工登记，不与墙钟时间混加；两种模式须使用同一交付标准。真人声明不等于系统验证。</p></details>
   <div class="review-grid"><div><video data-video controls playsinline></video><p data-position></p><div class="review-toolbar"><button data-phase="review">1 候选审核</button><button data-phase="sweep">2 全段补漏</button><button data-phase="report">3 整理报告</button><button data-pause>暂停计时</button></div>
   <p data-clock>尚未开始</p><p data-timing-warning role="alert" hidden></p><p data-coverage>播放覆盖不是注意力证明；跳转不算观看。</p>
+  <details><summary>定位未播放区间</summary><p>列出最长的20段记录缺口，完整清单在导出报告。跳转本身不增加覆盖；播放过也不代表没有漏标。</p><div data-gap-list></div></details>
   <fieldset><legend>当前事件</legend><label>动作时间（秒）<input data-time type="number" step="0.01"></label><button data-now>使用当前画面时间</button><label>标签<select data-label>${REVIEW_PROTOCOL.labels.map(l=>`<option value="${l.id}">${l.name}</option>`).join('')}</select></label><label>结果<select data-result><option value="unknown">未知／看不清</option><option value="made">命中</option><option value="missed">未中</option><option value="not-applicable">不适用</option></select></label><label>球队<input data-team maxlength="60"></label><label>球员<input data-player maxlength="60"></label><label>备注<input data-note maxlength="500"></label></fieldset>
   <div class="review-toolbar"><button data-confirm>C 确认</button><button data-edit>E 保存修改</button><button data-delete>D 删除</button><button data-add>M 补漏／新增</button><button data-undo>U 撤销</button><button data-prev>J 上一条</button><button data-next>K 下一条</button></div>
   <p role="status" data-status></p><div class="review-toolbar"><button data-finish>结束并锁定结果</button><button data-reference-template>下载参考答案格式</button><label>导入独立参考答案<input data-reference type="file" accept="application/json,.json" disabled></label><button data-report>导出复核报告</button><button data-export>导出任务与计时 JSON</button></div><pre data-evaluation>未核验正确率</pre></div><aside><h3>事件列表</h3><div data-list></div><details><summary>标签定义和复核清单</summary>${REVIEW_PROTOCOL.labels.map(l=>`<p><strong>${l.name}</strong>：${l.definition}</p>`).join('')}<ol>${REVIEW_PROTOCOL.checklist.map(s=>`<li>${s}</li>`).join('')}</ol><p>本版本记录录像动作，不自动生成官方技术统计。</p></details></aside></div>`;
@@ -60,6 +61,8 @@ export function mountReviewWorkbench(getContext){
   }
   function tick(visible=!document.hidden&&dialog.open){if(!session)return;session=tickReview(session,Math.max(now(),session.lastTick),{visible});}
   function stats(){
+    const gaps=session?uncoveredReviewRanges(session):[];
+    q('[data-gap-list]').innerHTML=session?(gaps.length?gaps.sort((a,b)=>(b.end-b.start)-(a.end-a.start)).slice(0,20).map(r=>`<button type="button" data-gap-start="${r.start}" data-gap-end="${r.end}">${r.start.toFixed(3)}–${r.end.toFixed(3)}秒 · 回看</button>`).join(''):'没有未播放区间；仍需人工判断是否漏标。'):'';
     const warning=q('[data-timing-warning]'),gap=session?.unmeasuredGapMs??0;
     warning.hidden=gap===0;warning.textContent=gap?`⚠ 检测到 ${(gap/1000).toFixed(1)} 秒计时中断，未计入主动时间。请在报告中说明卡顿或离开情况；不能把这段缺口算作省时收益。`:'';
     if(!session)return;const s=reviewSummary(session);q('[data-clock]').textContent=`${session.paused?'已暂停':'计时中'} · ${{review:'候选审核',sweep:'全段补漏',report:'整理报告'}[session.phase]} · 审核 ${(s.timingMs.review/1000).toFixed(1)}秒 / 补漏 ${(s.timingMs.sweep/1000).toFixed(1)}秒 / 报告 ${(s.timingMs.report/1000).toFixed(1)}秒`;q('[data-coverage]').textContent=`全段补漏播放覆盖 ${(s.coverageFraction*100).toFixed(1)}% · 待确认 ${s.pending} · 人工新增 ${s.manualAdditions}；覆盖不是注意力证明。`;q('[data-pause]').textContent=session.paused?'继续计时':'暂停计时';
@@ -96,6 +99,13 @@ export function mountReviewWorkbench(getContext){
   }
   q('[data-error-prev]').onclick=()=>{errorPage--;renderErrors();};q('[data-error-next]').onclick=()=>{errorPage++;renderErrors();};
   q('[data-error-list]').onclick=event=>{const button=event.target.closest('[data-error-time]');if(!button||!session||session.status!=='finished')return;const time=Number(button.dataset.errorTime);if(!Number.isFinite(time)||time<session.range.start||time>=session.range.end)return;player.pause();playback=null;player.currentTime=Math.max(session.range.start,time-2);message('已定位差异前2秒；回看不会改动锁定数据或计时。');};
+  q('[data-gap-list]').onclick=event=>{
+    const button=event.target.closest('[data-gap-start]');if(!button||!session)return;
+    const start=Number(button.dataset.gapStart);if(!Number.isFinite(start)||start<session.range.start||start>=session.range.end)return;
+    if(session.status==='active'&&!session.paused&&!storageConflict){tick();session=changeReviewPhase(session,'sweep',session.lastTick);}
+    player.pause();playback=null;player.currentTime=Math.max(session.range.start,start-.25);persist();stats();
+    message(session.status==='finished'?'已定位未播放区间；锁定后回看不修改本次记录。':`已定位缺口前0.25秒；${session.paused?'先继续计时，再播放补漏。':'请播放并检查，跳转本身不算覆盖。'}`);
+  };
   function select(id){const e=session?.events.find(e=>e.id===id);if(!e)return;selected=id;for(const f of ['time','label','result','team','player','note'])q(`[data-${f}]`).value=e[f]??'';player.currentTime=Math.max(session.range.start,e.time-2);playback=null;render();}
   function move(direction){const a=session?.events.filter(e=>e.status!=='deleted').sort((a,b)=>a.time-b.time)??[];if(!a.length)return;const i=a.findIndex(e=>e.id===selected);select(a[i<0?(direction<0?a.length-1:0):(i+direction+a.length)%a.length].id);}
   function mutate(action){try{
