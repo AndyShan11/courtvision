@@ -14,6 +14,7 @@ import { createRecoveringSeeker } from "./frame-recovery.js";
 import { truthPathFor } from "./truth-catalog.js";
 import { collectFrozenBatch } from "./frozen-batch.js";
 import { mountReviewWorkbench } from "./review-workbench.js";
+import { captureReviewCandidates } from "./review-candidates.js";
 
 const $ = (selector) => document.querySelector(selector);
 let frozenCatalog = [];
@@ -30,6 +31,7 @@ const state = {
   videoName: "",
   videoSourcePath: null,
   reviewBlob: null,
+  reviewCandidateRun: null,
   hoop: loadHoop(),
   calibratingHoop: false,
   viewReference: null,
@@ -55,6 +57,7 @@ const scanCoordinator = createScanCoordinator(() => JSON.stringify([
 function beginScan() {
   const session = scanCoordinator.begin();
   if (!session) notify("已有扫描正在运行，请等待完成后再开始");
+  if (session) state.reviewCandidateRun = null;
   return session;
 }
 
@@ -74,6 +77,7 @@ function loadDatasets() {
 }
 
 function switchDataset(key) {
+  state.reviewCandidateRun = null;
   state.reviewBlob = null;
   datasetRevision += 1;
   state.videoSourcePath = null;
@@ -708,6 +712,7 @@ async function analyzeShotCandidates() {
       completedAt: new Date().toISOString()
     };
     localStorage.setItem(`courtvision-pan-scan:${state.videoKey}`, JSON.stringify(state.lastPanScan));
+    state.reviewCandidateRun=captureReviewCandidates(state.lastPanScan,[...incomingCandidates,...incomingPanCandidates]);
     state.selectedId = null;
     persist();
     render();
@@ -821,6 +826,7 @@ async function analyzePanCandidates() {
       completedAt: new Date().toISOString()
     };
     localStorage.setItem(`courtvision-pan-scan:${state.videoKey}`, JSON.stringify(state.lastPanScan));
+    state.reviewCandidateRun=captureReviewCandidates(state.lastPanScan,incoming);
     persist(); render();
     $("#shotStatus").textContent = `${formatTime(scanStart)}–${formatTime(scanEnd)} · 横移 ${incoming.length} 个 · 用时 ${elapsedSeconds.toFixed(1)}秒 · 跳过 0 帧 · 重置 ${recoveringSeeker.resets} 次`;
     notify(`找到 ${incoming.length} 个镜头横移候选`);
@@ -1232,7 +1238,7 @@ document.addEventListener("keydown", (event) => {
 
 populateOptions();
 render();
-mountReviewWorkbench(()=>({src:video.currentSrc||video.src,duration:video.duration,crossOrigin:video.crossOrigin,videoIdentity:state.videoKey,blob:state.reviewBlob,pause:()=>video.pause(),candidates:state.segments.filter(e=>['camera-pan','shot-roi'].includes(e.source)&&e.status==='待确认'&&Number.isFinite(e.peakTime)).map(e=>({time:e.peakTime,label:'shot',result:'unknown',note:`机器候选：${e.source}`}))}));
+mountReviewWorkbench(()=>({src:video.currentSrc||video.src,duration:video.duration,crossOrigin:video.crossOrigin,videoIdentity:state.videoKey,blob:state.reviewBlob,candidateRun:state.reviewCandidateRun,pause:()=>video.pause(),candidates:state.reviewCandidateRun?.candidates??state.segments.filter(e=>['camera-pan','shot-roi'].includes(e.source)&&e.status==='待确认'&&Number.isFinite(e.peakTime)).map(e=>({time:e.peakTime,label:'shot',result:'unknown',note:`机器候选：${e.source}`}))}));
 
 function showPage() {
   const page = ["workspace", "segments", "report"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "workspace";

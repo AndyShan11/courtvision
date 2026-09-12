@@ -8,7 +8,8 @@ export function reviewErrorRates(evaluation){
 }
 export function reviewErrorRateText(evaluation){
   const r=reviewErrorRates(evaluation),pct=x=>x===null?'无分母，未计算':`${(x*100).toFixed(1)}%`;
-  return `漏标率（漏标/参考事件）${pct(r.missRate)}；未匹配标记占比（未匹配/确认标记）${pct(r.unmatchedPredictionRate)}；结果错误率（错填+未知/已匹配且参考结果已知）${pct(r.resultErrorRate)}。${r.completeReference?'':'参考不完整，仅对已知参考计算，不能代表整段真实错误率。'}`;
+  const outside=Math.max(0,(evaluation.summary?.confirmed??evaluation.predictions)-evaluation.predictions);
+  return `核验标签：${evaluation.scope?.join('、')??'未声明'}。漏标率（漏标/参考事件）${pct(r.missRate)}；未匹配标记占比（未匹配/范围内确认标记）${pct(r.unmatchedPredictionRate)}；结果错误率（错填+未知/已匹配且参考结果已知）${pct(r.resultErrorRate)}。${r.completeReference?'':'参考不完整，仅对已知参考计算，不能代表整段真实错误率。'}${outside?`另有${outside}条已确认事件不在参考标签范围内，未核验。`:''}`;
 }
 export function validateReviewReference(reference,session){
   if(reference.schemaVersion!==1||reference.protocol!==REVIEW_PROTOCOL.version)throw Error('参考答案协议版本不一致');
@@ -49,12 +50,14 @@ export function reviewReportText(session,evaluation=null){
   const lines=['# 篮球录像人工复核报告',`任务：${session.id}`,`模式：${session.mode==='manual'?'纯人工':'工具辅助'}；状态：${session.status==='finished'?'结果已锁定':'尚未结束'}`,`录像身份：${session.videoIdentity}`,`范围：${s.range.start}–${s.range.end}秒；协议：${session.protocol}`,'', '## 时间与检查范围',`候选审核：${(s.timingMs.review/1000).toFixed(1)}秒；全段补漏：${(s.timingMs.sweep/1000).toFixed(1)}秒；报告整理：${(s.timingMs.report/1000).toFixed(1)}秒。`,`主动工作合计：${(s.activeMs/1000).toFixed(1)}秒；墙钟：${(s.wallMs/1000).toFixed(1)}秒。`,`播放覆盖：${pct(s.coverageFraction)}；不能证明操作者全程注意。`,`确认：${s.confirmed}；待确认：${s.pending}；删除：${s.deleted}；人工新增：${s.manualAdditions}。`,'','## 交付事件'];
   for(const e of session.events.filter(e=>e.status==='confirmed').sort((a,b)=>a.time-b.time))lines.push(`- ${e.time.toFixed(3)}秒 | ${REVIEW_PROTOCOL.labels.find(l=>l.id===e.label).name} | ${e.result} | ${e.team||'球队未知'} / ${e.player||'球员未知'} | ${e.note||'无备注'}`);
   lines.push('','## 尚无补漏播放记录的区间');
+  if(session.unmeasuredGapMs)lines.push(`注意：计时器出现${(session.unmeasuredGapMs/1000).toFixed(1)}秒长间隔，不能判断是否在工作，未计主动时间；请补充原因。`);
   const gaps=uncoveredReviewRanges(session);
   lines.push(...(gaps.length?gaps.map(r=>`- ${r.start.toFixed(3)}–${r.end.toFixed(3)}秒`):['无；播放记录完整仍不代表标注没有漏检。']));
   lines.push('','## 尚未确认的事件');
   const pending=session.events.filter(e=>e.status==='pending');
   lines.push(...(pending.length?pending.map(e=>`- ${e.time.toFixed(3)}秒 | ${e.label} | ${e.note||'待复核'}`):['无。']));
   lines.push('','## 独立答案核验');
+  if(session.mode==='assisted')lines.push(`候选来源：${session.candidateProvenance?.kind??'未记录'}；${session.candidateProvenance?.warning??'来源独立性未知'}`,`原始整次扫描耗时：${Number.isFinite(session.candidateProvenance?.scanElapsedMs)?(session.candidateProvenance.scanElapsedMs/1000).toFixed(1)+'秒':'未记录'}（单列证据，不与登记等待重复相加）。`);
   lines.push(`录像身份：${session.mediaEvidence?.kind==='content-sha256'?'按文件内容SHA-256绑定；不代表录像来源或标注可信':'未核验文件内容，来源标识可能错配'}`,`打开工作台前身份准备耗时：${Number.isFinite(session.identityPreparationMs)?(session.identityPreparationMs/1000).toFixed(1)+'秒':'未记录'}（不包含在主动复核时间内）。`);
   if(session.trial){const t=session.trial;lines.push(`实验登记：操作者${t.operator}；对照组${t.pairId}；次序${t.order}；熟悉度${t.familiarity}；来源${t.performer}（均为声明）。`,`交付标准：${t.deliveryStandard}`,`任务开始前算法等待：${t.algorithmWaitMs===null?'未测，不能当作0':(t.algorithmWaitMs/1000).toFixed(1)+'秒（人工登记）'}。`);}
   if(!evaluation)lines.push('未导入参考答案，不能声称错误率或省时效果。');

@@ -22,6 +22,7 @@ export function tickReview(session,now,{visible=true}={}){
   const next=clone(session),delta=now-session.lastTick;
   // Long gaps indicate suspension; never silently charge them as active work.
   if(next.status==='active'&&!next.paused&&visible&&delta<=5000)next.timing[next.phase]+=delta;
+  if(next.status==='active'&&!next.paused&&visible&&delta>5000)next.unmeasuredGapMs=(next.unmeasuredGapMs??0)+delta;
   next.lastTick=now;return next;
 }
 export function changeReviewPhase(session,phase,now){
@@ -87,6 +88,7 @@ export function finishReview(session,now){
   if(summary.pending)next.completionWarnings.push(`还有${summary.pending}条待确认`);
   if(summary.coverageFraction<.99)next.completionWarnings.push('全段补漏播放覆盖不足99%');
   if(!reviewReportComplete(next))next.completionWarnings.push('教练报告四项尚未填写完整');
+  if(next.unmeasuredGapMs)next.completionWarnings.push(`计时出现${(next.unmeasuredGapMs/1000).toFixed(1)}秒长间隔，未计主动时间，需人工说明`);
   next.audit.push({action:'finish',at:now,warnings:[...next.completionWarnings]});return next;
 }
 export function updateReviewReport(session,field,value,now){
@@ -103,6 +105,7 @@ export function validateStoredReview(s,videoIdentity){
   if(!s.range||!Number.isFinite(s.range.start)||!Number.isFinite(s.range.end)||s.range.start<0||s.range.end<=s.range.start)throw Error('保存的任务区间无效');
   if(s.mediaEvidence?.kind==='content-sha256'&&(!/^[a-f0-9]{64}$/.test(s.mediaEvidence.sha256)||s.videoIdentity!==`sha256:${s.mediaEvidence.sha256}`||!Number.isSafeInteger(s.mediaEvidence.bytes)||s.mediaEvidence.bytes<0))throw Error('保存的录像指纹无效');
   if(s.identityPreparationMs!==undefined&&(!Number.isFinite(s.identityPreparationMs)||s.identityPreparationMs<0))throw Error('身份准备时间无效');
+  if(s.unmeasuredGapMs!==undefined&&(!Number.isFinite(s.unmeasuredGapMs)||s.unmeasuredGapMs<0))throw Error('未测计时间隔无效');
   if(s.mode==='manual'&&(s.phase==='review'||s.timing?.review!==0||s.events?.some(e=>e.origin==='candidate')))throw Error('纯人工任务包含机器审核记录');
   if(!Array.isArray(s.events)||s.events.length>10000||new Set(s.events.map(e=>e.id)).size!==s.events.length||!Array.isArray(s.audit)||!Array.isArray(s.undo)||!Array.isArray(s.coverage))throw Error('保存的任务记录无效');
   const checkEvent=e=>{validateReviewEvent(e,s.range);if(typeof e.id!=='string'||!e.id||!['pending','confirmed','deleted'].includes(e.status)||!['manual','candidate'].includes(e.origin)||(s.mode==='manual'&&e.origin!=='manual'))throw Error('保存的事件状态无效');};
