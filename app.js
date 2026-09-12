@@ -13,6 +13,7 @@ import { parseFrozenTruth, matchesFrozenSelection } from "./truth-identity.js";
 import { createRecoveringSeeker } from "./frame-recovery.js";
 import { truthPathFor } from "./truth-catalog.js";
 import { collectFrozenBatch } from "./frozen-batch.js";
+import { mountReviewWorkbench } from "./review-workbench.js";
 
 const $ = (selector) => document.querySelector(selector);
 let frozenCatalog = [];
@@ -28,6 +29,7 @@ const state = {
   videoDuration: 0,
   videoName: "",
   videoSourcePath: null,
+  reviewBlob: null,
   hoop: loadHoop(),
   calibratingHoop: false,
   viewReference: null,
@@ -72,6 +74,7 @@ function loadDatasets() {
 }
 
 function switchDataset(key) {
+  state.reviewBlob = null;
   datasetRevision += 1;
   state.videoSourcePath = null;
   state.calibratingHoop = false;
@@ -1046,6 +1049,7 @@ $("#videoInput").addEventListener("change", (event) => {
   const file = event.target.files[0];
   if (!file) return;
   switchDataset(`local:${file.name}:${file.size}:${file.lastModified}`);
+  state.reviewBlob = file;
   state.hoop = null;
   state.viewReference = null;
   localStorage.removeItem("courtvision-hoop");
@@ -1228,6 +1232,7 @@ document.addEventListener("keydown", (event) => {
 
 populateOptions();
 render();
+mountReviewWorkbench(()=>({src:video.currentSrc||video.src,duration:video.duration,crossOrigin:video.crossOrigin,videoIdentity:state.videoKey,blob:state.reviewBlob,pause:()=>video.pause(),candidates:state.segments.filter(e=>['camera-pan','shot-roi'].includes(e.source)&&e.status==='待确认'&&Number.isFinite(e.peakTime)).map(e=>({time:e.peakTime,label:'shot',result:'unknown',note:`机器候选：${e.source}`}))}));
 
 function showPage() {
   const page = ["workspace", "segments", "report"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "workspace";

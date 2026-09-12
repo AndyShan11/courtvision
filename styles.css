@@ -206,3 +206,18 @@ footer { padding: 28px 0 0; text-align: center; color: #58615d; font-size: 10px;
   .sidebar nav a span { display: none; }
 }
 @media print { #report[hidden] { display: block !important; } }
+/* Independent, answer-blind manual review workspace. */
+.review-dialog{width:min(1200px,96vw);max-height:94vh;overflow:auto;border:1px solid #536171;border-radius:12px;padding:24px;background:#101a26;color:#edf4fa}
+.review-dialog::backdrop{background:#020711e8}
+.review-dialog header,.review-setup,.review-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.review-dialog header{justify-content:space-between}.review-dialog h2{margin:0}
+.review-dialog button,.review-dialog input,.review-dialog select{font:inherit;font-size:14px;padding:9px;border:1px solid #63738a;border-radius:5px;background:#203046;color:#fff}
+.review-dialog button{cursor:pointer}.review-dialog button:focus-visible{outline:3px solid #64c8ff}.review-dialog label{display:grid;gap:4px;font-size:14px}
+.review-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(240px,1fr);gap:22px}.review-grid video{width:100%;max-height:400px;background:#000}
+.review-dialog fieldset{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}.review-dialog input{max-width:180px}.review-event{display:block;width:100%;text-align:left;margin:6px 0}.review-event.selected{border-color:#6dd5ff;background:#234763}
+.review-dialog p,.review-dialog details{font-size:15px;line-height:1.6}.review-dialog [data-status]{color:#ffd68a}
+.review-dialog textarea{min-height:90px;width:100%;resize:vertical;background:#172537;color:#edf4fa;border:1px solid #63738a;border-radius:5px;padding:9px;font:inherit}
+.review-dialog label:has([data-report-field]){flex:1 1 240px;min-width:0}.review-dialog pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.6}
+.review-dialog button:disabled,.review-dialog textarea:disabled{opacity:.55;cursor:not-allowed}.review-dialog [data-save-status]{color:#ffce84}
+.review-dialog input:focus-visible,.review-dialog textarea:focus-visible,.review-dialog select:focus-visible{outline:3px solid #64c8ff;outline-offset:2px}
+@media(max-width:760px){.review-grid{grid-template-columns:1fr}.review-dialog{padding:12px}.review-dialog input{max-width:135px}}
