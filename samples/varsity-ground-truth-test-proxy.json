@@ -1,0 +1,17 @@
+{
+  "video": "varsity-test-proxy.webm",
+  "source": "HCTV: Hazen vs. Enosburg, 2026-01-15; proxy starts at source 35:00",
+  "reviewedRange": { "start": 0, "end": 120 },
+  "method": "Frozen final test labels shifted by -2100 seconds for the proxy clip",
+  "definition": "Live-ball field-goal attempts only; free throws excluded.",
+  "split": "final untouched test",
+  "shots": [
+    { "time": 4.8, "note": "左篮半场进攻终结" },
+    { "time": 19.5, "note": "左篮近筐终结" },
+    { "time": 35.0, "note": "右篮突破终结并形成罚球" },
+    { "time": 57.8, "note": "右篮近筐第一次终结" },
+    { "time": 58.8, "note": "右篮进攻篮板二次终结" },
+    { "time": 67.6, "note": "左篮近筐终结" },
+    { "time": 75.6, "note": "右篮快攻终结" }
+  ]
+}

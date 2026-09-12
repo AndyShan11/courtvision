@@ -1,0 +1,12 @@
+{
+  "video": "varsity-train-proxy.webm",
+  "source": "HCTV source proxy starts at 27:30",
+  "reviewedRange": { "start": 0, "end": 120 },
+  "method": "Training labels shifted by -1650 seconds",
+  "definition": "Live-ball field-goal attempts only; free throws excluded.",
+  "split": "training",
+  "shots": [
+    { "time": 16.2 }, { "time": 30.8 }, { "time": 47.5 }, { "time": 54.8 },
+    { "time": 82.8 }, { "time": 99.8 }, { "time": 111.0 }, { "time": 117.2 }
+  ]
+}

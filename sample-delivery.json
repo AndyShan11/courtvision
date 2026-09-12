@@ -1,0 +1,11 @@
+{
+  "/courtvision/samples/varsity-fixed-camera-240p.mp4": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f8/Boys_Varsity_Basketball_v._Enosburg_-_January_15%2C_2026.webm/Boys_Varsity_Basketball_v._Enosburg_-_January_15%2C_2026.webm.240p.vp9.webm"
+  },
+  "/courtvision/samples/varsity-harwood-240p.webm": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c5/Boys_Varsity_Basketball_v._Harwood_-_January_22%2C_2026.webm/Boys_Varsity_Basketball_v._Harwood_-_January_22%2C_2026.webm.240p.vp9.webm"
+  },
+  "/courtvision/samples/varsity-randolph-240p.webm": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/2/28/Boys_Varsity_Basketball_v._Randolph_-_February_17%2C_2026.webm/Boys_Varsity_Basketball_v._Randolph_-_February_17%2C_2026.webm.240p.vp9.webm"
+  }
+}

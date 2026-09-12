@@ -1,0 +1,20 @@
+{
+  "video": "varsity-harwood-240p.webm",
+  "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+  "source": "HCTV: Hazen vs. Harwood, 2026-01-22",
+  "reviewedRange": {"start": 1052, "end": 1082},
+  "method": "Complete 0.5-second review of truth-harwood-1602-1802-v018 pages 10-12, 0.25-second review of 17:50-17:58, and higher-resolution 480p reference review of 17:51-17:57 with additional 0.125-second review of the contested passing sequence. Assistant visual review, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 1074.875, "uncertaintySeconds": 0.25, "note": "黑衣30号接低位回传，在左侧短距离跳投。", "evidence": "truth-harwood-1751-reference-v020/timeline-02.jpg; relative release between 3.75 and 4.00 seconds, add source offset 1071"}
+  ],
+  "reviewedNegatives": [
+    {"start": 1052, "end": 1071.5, "note": "黑衣外围组织、低位接球和回传，未见出手。"},
+    {"start": 1071.5, "end": 1074.625, "note": "右侧受防守干扰后将球传向底线队友，队友低位持球转身再回传30号；不是独立投篮。", "evidence": "truth-harwood-1752-detail-v021/timeline-01.jpg and truth-harwood-1751-reference-v020 pages 01-02"},
+    {"start": 1075.5, "end": 1082, "note": "球落下后白衣取得球推进至右侧，未见独立补篮或下一次出手。"}
+  ],
+  "reference": {"provenance": "experiments/harwood-reference-v019.json", "clip": "experiments/artifacts/harwood-1751-reference-v020.mkv", "sourceStartSeconds": 1071, "durationSeconds": 6, "crop": {"x": 0, "y": 0, "width": 600, "height": 370}, "codec": "ffv1", "note": "Reference used only for annotation; original 240p evaluation video unchanged. Clip timestamps are relative; source alignment visually checked, not claimed bit-exact."},
+  "scopeNote": "Earlier unresolved ranges remain pending, not discarded. No algorithm predictions used for annotation or selection."
+}

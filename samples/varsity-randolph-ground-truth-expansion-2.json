@@ -1,0 +1,23 @@
+{
+  "video": "varsity-randolph-240p.webm",
+  "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+  "source": "HCTV: Hazen vs. Randolph, 2026-02-17",
+  "reviewedRange": {"start": 2105, "end": 2165},
+  "method": "Complete 0.5-second review of truth-randolph-3505-3605-v029 pages 01-06. Complete 0.125-second detail review at 2127-2131, 2138-2140, 2143-2145, 2160-2164; complete 0.25-second review at 2145-2149. Assistant visual annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 2127.8125, "uncertaintySeconds": 0.25, "note": "白衣右篮近筐出手，蓝衣起跳干扰。", "evidence": "truth-randolph-3527-detail-v029/timeline-01.jpg; 2127.75-2127.875 release"},
+    {"time": 2128.8125, "uncertaintySeconds": 0.25, "note": "白衣篮下前场篮板后的二次近筐出手。", "evidence": "truth-randolph-3527-detail-v029/timeline-01.jpg; 2128.75-2128.875 release; page 02 follows rebound without a further independent shot"},
+    {"time": 2146.375, "uncertaintySeconds": 0.25, "note": "白衣左底角向右篮跳投。", "evidence": "truth-randolph-3545-detail-v029/timeline-01.jpg; 2146.25-2146.5 release"},
+    {"time": 2161.5625, "uncertaintySeconds": 0.25, "note": "蓝衣左篮近筐出手，此前举球假动作未出手。", "evidence": "truth-randolph-3600-detail-v029/timeline-01.jpg; 2161.5-2161.625 release; page 02 follows the same trajectory and rebound"}
+  ],
+  "reviewedNegatives": [
+    {"start": 2105, "end": 2127.5, "note": "裁判持球等待、白衣边线发球后推进、半场运球传导与突破准备。"},
+    {"start": 2129.5, "end": 2146, "note": "篮板争抢后白衣继续组织；35:38跳起横传右侧队友，并非向篮筐出手；35:43-35:44持球举过头后横传左侧，不是投篮。"},
+    {"start": 2148.5, "end": 2161.25, "note": "蓝衣发球推进、低位接球；36:00举球后仍持球下落，再准备真正出手。"},
+    {"start": 2162.75, "end": 2165, "note": "篮板争抢与白衣获得球后推进，没有蓝衣独立补篮。"}
+  ],
+  "scopeNote": "Advertisement around 2050-2105 is not counted. Earlier ambiguous 1950-1970 is retained pending review. No predictions used to annotate or select this range."
+}

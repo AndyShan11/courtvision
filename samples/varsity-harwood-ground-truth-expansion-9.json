@@ -1,0 +1,21 @@
+{
+  "video": "varsity-harwood-240p.webm",
+  "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+  "source": "HCTV: Hazen vs. Harwood, 2026-01-22",
+  "reviewedRange": {"start": 1380, "end": 1440},
+  "method": "Complete six-page 0.5-second review of truth-harwood-2300-v055; seven-page 0.25-second 480p review of 1386-1399, with 0.125-second crop of 1395.5-1396.75. Assistant visual annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls are reviewed negatives, not live playing time.",
+  "split": "expansion frozen before algorithm predictions; same game as existing Harwood test, not new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 1388.125, "uncertaintySeconds": 0.25, "note": "黑衣30号接左侧传球后近筐跳投，球随后到左篮附近；没有将此前底角传球算作投篮。", "evidence": "truth-harwood-2306-reference-v055/timeline-02.jpg; relative 2.0-2.25 plus 1386"},
+    {"time": 1395.9375, "uncertaintySeconds": 0.25, "note": "白衣11号突破右篮，举球向上出手受到黑衣防守封堵，球偏离篮筐。依据出手动作而非随后罚球判定。", "evidence": "truth-harwood-23155-crop-v055/timeline-01.jpg; relative 0.375-0.5 plus 1395.5; full context truth-harwood-2306-reference-v055 pages 05-07"}
+  ],
+  "reviewedNegatives": [
+    {"start": 1380, "end": 1387.5, "note": "黑衣组织进攻；左底角举球后传至30号，不是底角跳投。"},
+    {"start": 1389.5, "end": 1395.5, "note": "白衣抢篮板、传球推进、突破；没有额外投篮。"},
+    {"start": 1396.75, "end": 1440, "note": "犯规后死球、裁判管理、换人及罚球。23:33附近和23:53附近的罚球均排除；没有新增运动战出手。"}
+  ],
+  "reference": {"provenance": "experiments/harwood-reference-v019.json", "clips": [{"file": "harwood-2306-reference-v055.mkv", "sourceStartSeconds": 1386, "durationSeconds": 13}, {"file": "harwood-23155-crop-v055.mkv", "sourceStartSeconds": 1395.5, "durationSeconds": 1.25, "crop": "420:400:260:0"}], "note": "480p annotation reference only; original 240p evaluation source unchanged; timestamps visually aligned, not a browser consistency test."},
+  "scopeNote": "Includes ordinary foul/free-throw dead-ball time, not 60 seconds of live action. No extended timeout or advertisements. All earlier unresolved ranges retained. Preregistration: experiments/harwood-additional-preregistration-v055.json."
+}

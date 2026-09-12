@@ -1,0 +1,21 @@
+{
+  "video": "varsity-fixed-camera-240p.mp4",
+  "source": "HCTV: Hazen vs. Enosburg, 2026-01-15",
+  "reviewedRange": { "start": 2524, "end": 2900 },
+  "method": "complete 1-second and 0.5-second review, 0.125-second contact sheets, plus 0.25-second boundary review",
+  "definition": "Live-ball field-goal attempts visible in the video; free throws excluded. Timeouts, free-throw sequences, dead balls, and ordinary camera moves are reviewed negatives.",
+  "split": "second extended untouched audit; labels frozen before any algorithm run on this range",
+  "shots": [
+    { "time": 2558.8, "note": "左篮半场进攻终结" },
+    { "time": 2587.8, "note": "右篮半场进攻终结" },
+    { "time": 2597.5, "note": "左篮突破终结" },
+    { "time": 2673.8, "note": "右篮阵地战终结" },
+    { "time": 2687.8, "note": "右篮突破终结，随后死球" },
+    { "time": 2763.8, "note": "左篮半场进攻终结" },
+    { "time": 2773.8, "note": "右篮突破终结，随后罚球" },
+    { "time": 2825.8, "note": "左篮近筐终结" },
+    { "time": 2832.0, "note": "右篮快速终结" },
+    { "time": 2843.0, "note": "左篮突破终结，随后死球" },
+    { "time": 2884.5, "note": "右篮近筐终结" }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "video": "varsity-harwood-240p.webm",
+  "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+  "source": "HCTV: Hazen vs. Harwood, 2026-01-22",
+  "reviewedRange": {"start": 1440, "end": 1500},
+  "method": "Complete six-page 0.5-second visual review of truth-harwood-2400-v056; complete 480p 0.25-second reference review of 1452-1456,1472-1477,1481-1486,1491-1496; additional 0.125-second review of 1492.75-1493.75. Assistant visual labels, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting actions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm predictions on this range; same game as Harwood test, not new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 1473.625, "uncertaintySeconds": 0.25, "note": "黑衣底线运球后向左篮跳投；白衣随后抢得篮板。", "evidence": "truth-harwood-1472-reference-v056/timeline-01.jpg relative 1.5-1.75 plus 1472; pages 02-03 show trajectory and rebound"},
+    {"time": 1482.375, "uncertaintySeconds": 0.25, "note": "白衣接外围传球后向右篮跳投；右侧篮板争抢不计额外出手。", "evidence": "truth-harwood-1481-reference-v056/timeline-01.jpg relative 1.25-1.5 plus 1481; pages 02-03 show rebound and change of possession"},
+    {"time": 1493.1875, "uncertaintySeconds": 0.25, "note": "黑衣22号接15号跳起传球，随后近筐举球出手，白衣防守球员倒地；不按是否得分判定。", "evidence": "truth-harwood-1493-detail-v056/timeline-01.jpg relative 2.125-2.25 plus 1491; full sequence truth-harwood-1491-reference-v056 pages 01-03"}
+  ],
+  "reviewedNegatives": [
+    {"start": 1440, "end": 1444, "note": "白衣罚球及黑衣篮板、出球，罚球不计运动战出手。"},
+    {"start": 1444, "end": 1473.25, "note": "黑衣推进和半场传导；1452-1456为高位接球、假动作和回传，不是出手；1472附近底线持球后才突破跳投。"},
+    {"start": 1475.25, "end": 1482, "note": "白衣篮板、推进、外围传球，没有补篮。"},
+    {"start": 1483.75, "end": 1492.75, "note": "黑衣抢篮板并推进；1492附近15号起跳是向低位22号传球，不计额外投篮。"},
+    {"start": 1494, "end": 1500, "note": "白衣倒地后死球、裁判管理，无新增出手。"}
+  ],
+  "reference": {"provenance": "experiments/harwood-reference-v019.json", "clips": [{"file": "harwood-1452-reference-v056.mkv", "sourceStartSeconds": 1452, "durationSeconds": 4}, {"file": "harwood-1472-reference-v056.mkv", "sourceStartSeconds": 1472, "durationSeconds": 5}, {"file": "harwood-1481-reference-v056.mkv", "sourceStartSeconds": 1481, "durationSeconds": 5}, {"file": "harwood-1491-reference-v056.mkv", "sourceStartSeconds": 1491, "durationSeconds": 5}], "note": "480p annotation references only; evaluation source remains original 240p; not evidence of browser sampling consistency."},
+  "scopeNote": "Consecutive preregistered range under experiments/harwood-additional-preregistration-v055.json. Includes ordinary dead balls but no ads or extended breaks. Earlier unresolved ranges retained."
+}

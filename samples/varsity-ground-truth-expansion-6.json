@@ -1,0 +1,17 @@
+{
+  "video": "varsity-fixed-camera-240p.mp4",
+  "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+  "source": "HCTV: Hazen vs. Enosburg, 2026-01-15",
+  "reviewedRange": { "start": 4927, "end": 4980 },
+  "method": "Complete 0.5-second visual review of 4920-4980; additional 0.125-second review of 4923-4927, 4952-4957 and 4977-4981. Assistant-reviewed, not independently verified by a human coach. Unresolved 4920-4927 remains in the preregistered cohort, NOT labeled negative or discarded.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Duration includes ordinary dead balls and inbound preparation, not exclusively live-ball time.",
+  "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout; zero-shot negative interval does not by itself measure shot recall",
+  "freezeDate": "2026-09-11",
+  "shots": [],
+  "reviewedNegatives": [
+    { "start": 4927, "end": 4943, "note": "争抢停表、倒地球员起身和黑衣底线发球准备。", "evidence": "truth-enosburg-8200-v046/timeline-01.jpg through timeline-03.jpg" },
+    { "start": 4943, "end": 4957, "note": "黑衣推进、外围传球和远侧切入，球员低位收球受阻后停表，未见向篮筐投射。", "evidence": "truth-enosburg-8200-v046/timeline-03.jpg and timeline-04.jpg; truth-enosburg-8232-detail-v046/timeline-01.jpg and timeline-02.jpg" },
+    { "start": 4957, "end": 4977, "note": "死球、换人及底线发球准备；普通场内流程而非广告/长暂停。", "evidence": "truth-enosburg-8200-v046/timeline-04.jpg through timeline-06.jpg" },
+    { "start": 4977, "end": 4980, "note": "黑衣底线高吊发球朝远离篮筐的外侧，白衣在外围起跳争抢；不是底角投篮。", "evidence": "truth-enosburg-8257-detail-v046/timeline-01.jpg and timeline-02.jpg" }
+  ]
+}

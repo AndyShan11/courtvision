@@ -1,0 +1,16 @@
+{
+  "video": "varsity-harwood-240p.webm",
+  "source": "HCTV: Hazen vs. Harwood, 2026-01-22",
+  "reviewedRange": { "start": 1680, "end": 1800 },
+  "method": "complete 1-second review from 28:00 to 30:00, followed by 0.25-second and 0.125-second contact-sheet review around every possible termination",
+  "definition": "Live-ball field-goal attempts visible in the video; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "third-game untouched test; labels frozen before any algorithm run on this video",
+  "shots": [
+    { "time": 1688.75, "note": "右篮突破终结" },
+    { "time": 1699.75, "note": "右篮中距离跳投" },
+    { "time": 1721.9, "note": "左篮突破终结" },
+    { "time": 1727.2, "note": "右篮转换终结" },
+    { "time": 1749.5, "note": "左篮近筐终结" },
+    { "time": 1767.3, "note": "右篮近筐终结" }
+  ]
+}

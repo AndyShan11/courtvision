@@ -1,0 +1,20 @@
+{
+  "video": "varsity-randolph-240p.webm",
+  "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+  "source": "HCTV: Hazen vs. Randolph, 2026-02-17",
+  "reviewedRange": {"start": 2645, "end": 2700},
+  "method": "Complete 0.5-second review truth-randolph-4405-4500-v039 pages01-06 and 0.125-second detail2647/2689-v039 pages01-02. Ambiguous close shot resolved with 480p reference truth-randolph-44075-reference-v040/timeline-01.jpg, crop sourceStart2647.5, spacing0.125. Reference provenance in randolph-reference-v039.json. Assistant visual annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Normal in-game dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 2648.1875, "uncertaintySeconds": 0.25, "note": "蓝15由左侧突破至篮下近筐出手，白衣起跳干扰后球向右偏出。", "evidence": "truth-randolph-44075-reference-v040/timeline-01.jpg; relative0.625-0.75 shows upward shooting extension near rim before ball deflects right; sourceStart2647.5"},
+    {"time": 2649.8125, "uncertaintySeconds": 0.25, "note": "蓝衣右低位接球后再次跳投。", "evidence": "truth-randolph-detail-2647-v039/timeline-02.jpg; release2649.75-2649.875; confirmed by truth-randolph-4407-reference-v039/timeline-02.jpg"}
+  ],
+  "reviewedNegatives": [
+    {"start": 2653, "end": 2681, "note": "比赛内裁判死球处理及发球站位，保留作普通连续比赛负例；不是广告、场间或离场暂停。"},
+    {"start": 2689, "end": 2692, "note": "白衣低位持球假动作后横传外围22，未额外出手。"},
+    {"start": 2692, "end": 2700, "note": "外围掉球追回及边线死球，未见出手。"}
+  ],
+  "scopeNote": "Entire55-second previously pending segment now frozen; no algorithm predictions inspected. Duration includes normal dead balls as earlier reviewed game segments do; not55seconds of live-ball action. Extended timeouts and advertisements remain separately excluded."
+}

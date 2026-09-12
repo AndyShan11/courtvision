@@ -1,0 +1,27 @@
+{
+  "video": "varsity-harwood-240p.webm",
+  "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+  "source": "HCTV: Hazen vs. Harwood, 2026-01-22",
+  "reviewedRange": {"start": 1260, "end": 1320},
+  "method": "Complete 0.5-second visual review of truth-harwood-2000-2300-v023 pages 07-12. Complete 0.25-second higher-resolution reference review of 21:13-21:16, 21:19-21:26, 21:48-21:53 and 21:55-21:59. Additional 0.125-second review of 21:23.25-21:24.75 for the low-post pump fake. Assistant-reviewed, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 1280.5, "uncertaintySeconds": 0.25, "note": "黑衣30号左侧接球跳投。", "evidence": "truth-harwood-2119-reference-v025/timeline-01.jpg; relative 1.5 seconds plus 1279"},
+    {"time": 1284.4375, "uncertaintySeconds": 0.25, "note": "黑衣抢到进攻篮板，低位假动作后近筐出手。", "evidence": "truth-harwood-2123-detail-v025/timeline-01.jpg; release between relative 5.375 and 5.5 seconds plus 1279"},
+    {"time": 1309.375, "uncertaintySeconds": 0.25, "note": "白衣右篮突破近筐出手。", "evidence": "truth-harwood-2148-reference-v025/timeline-01.jpg; release between relative 1.25 and 1.5 seconds plus 1308"},
+    {"time": 1311.375, "uncertaintySeconds": 0.25, "note": "白衣20号取得前场篮板后再次近筐出手，受防守干扰。", "evidence": "truth-harwood-2148-reference-v025/timeline-02.jpg; relative 3.25-3.5 seconds plus 1308"},
+    {"time": 1316.625, "uncertaintySeconds": 0.25, "note": "黑衣左篮快攻上篮。", "evidence": "truth-harwood-2155-reference-v025/timeline-01.jpg; release between relative 1.5 and 1.75 seconds plus 1315"}
+  ],
+  "reviewedNegatives": [
+    {"start": 1260, "end": 1280.25, "note": "白衣半场组织；21:13外围传球后21:14-21:15运球被断，无投篮。黑衣转换推进后分球左侧。"},
+    {"start": 1281.75, "end": 1284.125, "note": "进攻篮板与低位持球；21:23.6-21:24.1白衣跳起封堵，黑衣未释放球，不计额外出手。"},
+    {"start": 1285.75, "end": 1309.125, "note": "白衣发球推进与半场传导，随后突破准备。"},
+    {"start": 1310.25, "end": 1311.125, "note": "前一球落下后篮板争抢和收球。"},
+    {"start": 1312, "end": 1316.375, "note": "黑衣获得球推进；传球、运球和起步准备。"},
+    {"start": 1317.25, "end": 1320, "note": "白衣抓下篮板、转身推进；未见黑衣独立补篮。"}
+  ],
+  "reference": {"provenance": "experiments/harwood-reference-v019.json", "clips": [{"file": "harwood-2113-reference-v025.mkv", "sourceStartSeconds": 1273, "durationSeconds": 3}, {"file": "harwood-2119-reference-v025.mkv", "sourceStartSeconds": 1279, "durationSeconds": 7}, {"file": "harwood-2148-reference-v025.mkv", "sourceStartSeconds": 1308, "durationSeconds": 5}, {"file": "harwood-2155-reference-v025.mkv", "sourceStartSeconds": 1315, "durationSeconds": 4}], "format": "854x480 FFV1, no crop", "note": "Reference only, original 240p evaluation video unchanged; timestamps relative to each clip. Alignment visually checked, not claimed bit-exact."},
+  "scopeNote": "22:00-23:00 and earlier unresolved ranges remain pending, not discarded. No algorithm predictions used for annotation or selection."
+}

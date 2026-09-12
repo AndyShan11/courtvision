@@ -1,0 +1,22 @@
+{
+  "video": "varsity-fixed-camera-240p.mp4",
+  "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+  "source": "HCTV: Hazen vs. Enosburg, 2026-01-15",
+  "reviewedRange": { "start": 3138, "end": 3253 },
+  "method": "Complete 1-second contact-sheet visual review with 0.25-second review of candidate and transition windows; 53:40-53:43 contact additionally reviewed at 0.125 seconds. Assistant-reviewed, not independently verified by a human coach.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    { "time": 3168.375, "uncertaintySeconds": 0.25, "note": "白衣抢断后右篮快攻上篮。", "evidence": "truth-expansion-enosburg-fine-v010/timeline-034.jpg and timeline-035.jpg" },
+    { "time": 3245, "uncertaintySeconds": 0.25, "note": "白衣截获黑衣底线发球后，右篮快攻上篮。", "evidence": "truth-expansion-enosburg-fine-v010/timeline-049.jpg and timeline-050.jpg" }
+  ],
+  "reviewedNegatives": [
+    { "start": 3138, "end": 3148, "note": "黑衣底线发球准备，不是罚球。" },
+    { "start": 3173, "end": 3207, "note": "死球、近景及底线发球准备；记分变化为此前上篮延迟更新。" },
+    { "start": 3208, "end": 3218, "note": "黑衣后场推进及左侧组织，未见运动战出手。" },
+    { "start": 3220, "end": 3223, "note": "黑衣突破遇防守后球向底线掉落、停表，未见朝篮筐出手；0.125秒图复核。", "evidence": "truth-enosburg-5341-eighth-v010/timeline-01.jpg" },
+    { "start": 3223, "end": 3241, "note": "死球及黑衣底线发球准备。" },
+    { "start": 3248, "end": 3253, "note": "上篮后死球，未见新的运动战出手。" }
+  ]
+}

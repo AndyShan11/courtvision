@@ -1,0 +1,22 @@
+{
+  "video": "varsity-randolph-240p.webm",
+  "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+  "source": "HCTV: Hazen vs. Randolph, 2026-02-17",
+  "reviewedRange": {"start": 2165, "end": 2225},
+  "method": "Full0.5s review truth-randolph-3605-3705-v030 pages01-06 reread v043. Higher-resolution reference truth-randolph-3621-reference-v043 pages01-03 and truth-randolph-36405-reference-v043 pages01-03 all viewed, plus0.125s truth-randolph-3624-reference-v043 and truth-randolph-3642-reference-v043 page01 each. Reference provenance randolph-reference-v039.json. Assistant visual annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Normal in-game dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; resolved pending segment, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 2181.3125, "uncertaintySeconds": 0.25, "note": "白20右篮转身近筐出手。", "evidence": "truth-randolph-3620-detail-v030; confirmed by truth-randolph-3621-reference-v043/timeline-01.jpg relative0.25-0.5, sourceStart2181"},
+    {"time": 2202.0625, "uncertaintySeconds": 0.25, "note": "白11接底线发球后右篮近筐起跳投篮，遭蓝24干扰。", "evidence": "truth-randolph-3642-reference-v043/timeline-01.jpg relative1.5-1.625, sourceStart2200.5; shooting extension and subsequent contact. Preceding inbound is complete, players actively contest before stop."}
+  ],
+  "reviewedNegatives": [
+    {"start": 2182.25, "end": 2183.5, "note": "白20与蓝队争抢篮板后双手收球落下，球没有被重新向上补投。"},
+    {"start": 2184.25, "end": 2185, "note": "白20转身后向右侧22方向分球，球向侧下方离开；不是朝篮筐投射。", "evidence": "truth-randolph-3624-reference-v043/timeline-01.jpg sourceStart2181, relative3.25-3.875"},
+    {"start": 2185, "end": 2200.5, "note": "出界处理、换人与准备发球，普通比赛死球。"},
+    {"start": 2203, "end": 2205, "note": "停止比赛后蓝衣向本方防守篮筐抛球，不是活球进攻投篮。"},
+    {"start": 2205, "end": 2225, "note": "死球和罚球准备，末尾白队罚球按定义排除。"}
+  ],
+  "scopeNote": "All previously pending60seconds retained and reviewed without algorithm predictions. Duration includes normal dead balls and free-throw setup, not60seconds of live-ball action. No advertisements or extended off-court timeouts added."
+}

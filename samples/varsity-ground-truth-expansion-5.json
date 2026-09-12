@@ -1,0 +1,20 @@
+{
+  "video": "varsity-fixed-camera-240p.mp4",
+  "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+  "source": "HCTV: Hazen vs. Enosburg, 2026-01-15",
+  "reviewedRange": { "start": 4860, "end": 4920 },
+  "method": "Complete 0.5-second contact-sheet visual review; additional 0.125-second review of 4866-4870, 4896-4899 and 4905-4915. Assistant-reviewed, not independently verified by a human coach.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Reviewed duration includes ordinary dead balls, substitutions and inbound preparation, not exclusively live-ball time.",
+  "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    { "time": 4896.9375, "uncertaintySeconds": 0.25, "note": "黑衣在画面远侧底角接球后跳投，朝右篮出手；以离手及球上行判断，不用延迟比分推断。", "evidence": "truth-enosburg-8136-detail-v045/timeline-01.jpg" }
+  ],
+  "reviewedNegatives": [
+    { "start": 4866, "end": 4870, "note": "黑衣远侧持球摆脱后向内传球，球落低位、球员俯身争球后停表；没有朝篮筐投射弧线。", "evidence": "truth-enosburg-8106-detail-v045/timeline-01.jpg and timeline-02.jpg" },
+    { "start": 4870, "end": 4894, "note": "裁判处理、换人和底线发球准备，普通比赛死球，不是广告或球队长暂停。", "evidence": "truth-enosburg-8100-v045/timeline-02.jpg through timeline-04.jpg" },
+    { "start": 4905, "end": 4910, "note": "白衣推进后分球、运球和手递手，未见出手。", "evidence": "truth-enosburg-8145-detail-v045/timeline-01.jpg and timeline-02.jpg" },
+    { "start": 4910, "end": 4915, "note": "白22突破至左侧近筐后向画面右侧低位队友传球；接球队员收球、转身再传外围，不是一次出手加一次补篮。", "evidence": "truth-enosburg-8145-detail-v045/timeline-03.jpg and timeline-04.jpg" },
+    { "start": 4915, "end": 4920, "note": "白衣外围传球和运球，粗看疑似跳投的动作是传球。", "evidence": "truth-enosburg-8100-v045/timeline-06.jpg" }
+  ]
+}

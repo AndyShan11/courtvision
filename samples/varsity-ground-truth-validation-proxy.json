@@ -1,0 +1,12 @@
+{
+  "video": "varsity-validation-proxy.webm",
+  "source": "HCTV source proxy starts at 31:30",
+  "reviewedRange": { "start": 0, "end": 120 },
+  "method": "Validation labels shifted by -1890 seconds",
+  "definition": "Live-ball field-goal attempts only; free throws excluded.",
+  "split": "validation",
+  "shots": [
+    { "time": 4.4 }, { "time": 10.0 }, { "time": 31.2 },
+    { "time": 50.8 }, { "time": 99.1 }, { "time": 110.8 }
+  ]
+}

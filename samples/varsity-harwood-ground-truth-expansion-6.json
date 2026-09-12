@@ -1,0 +1,23 @@
+{
+  "video": "varsity-harwood-240p.webm",
+  "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+  "source": "HCTV: Hazen vs. Harwood, 2026-01-22",
+  "reviewedRange": {"start": 1200, "end": 1260},
+  "method": "Complete 0.5-second visual review of truth-harwood-2000-2300-v023 pages 01-06, plus complete 0.25-second higher-resolution reference windows 20:23-20:30, 20:37-20:42 and 20:53-20:57. Additional 0.125-second review of 20:38.25-20:40.125 distinguishes a continuous shot trajectory from a putback. Assistant-reviewed, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 1226.25, "uncertaintySeconds": 0.25, "note": "黑衣14号接外围回传跳投。", "evidence": "truth-harwood-2023-reference-v024/timeline-02.jpg; source offset 1223 seconds"},
+    {"time": 1238.4375, "uncertaintySeconds": 0.25, "note": "白衣11号中距离跳投；后续球碰筐板连续弹跳，不拆为第二次出手。", "evidence": "truth-harwood-2038-detail-v024/timeline-01.jpg; release between relative 1.375 and 1.5, source offset 1237 seconds"},
+    {"time": 1255.125, "uncertaintySeconds": 0.25, "note": "黑衣接30号向底线的传球后左篮近筐出手。", "evidence": "truth-harwood-2053-reference-v024/timeline-01.jpg; source offset 1253 seconds"}
+  ],
+  "reviewedNegatives": [
+    {"start": 1200, "end": 1226, "note": "暂停后发球、运球推进和半场组织；20:23-20:25低位持球回传底角再回外围，未见独立投篮。"},
+    {"start": 1227.5, "end": 1238.125, "note": "争抢篮板、白衣控制球推进并传导；20:28.5争抢中的拨球不计投篮。"},
+    {"start": 1238.75, "end": 1254.875, "note": "前一球连续飞行碰筐板后黑衣抢篮板推进；未见白衣补篮。20:54黑衣30号将球传向底线队友，不计外围投篮。"},
+    {"start": 1255.75, "end": 1260, "note": "球落下后双方争抢，白衣获得球转换推进，未见独立补篮。"}
+  ],
+  "reference": {"provenance": "experiments/harwood-reference-v019.json", "clips": [{"file": "harwood-2023-reference-v024.mkv", "sourceStartSeconds": 1223, "durationSeconds": 7}, {"file": "harwood-2037-reference-v024.mkv", "sourceStartSeconds": 1237, "durationSeconds": 5}, {"file": "harwood-2053-reference-v024.mkv", "sourceStartSeconds": 1253, "durationSeconds": 4}], "format": "854x480 FFV1, no crop", "note": "Annotation reference only; 240p evaluation video unchanged. Contact sheet times relative to each clip. Alignment visually checked, not claimed bit-exact."},
+  "scopeNote": "21:00-23:00 and earlier unresolved ranges remain pending, not discarded. No algorithm predictions used for annotation or selection."
+}

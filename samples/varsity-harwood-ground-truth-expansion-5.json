@@ -1,0 +1,20 @@
+{
+  "video": "varsity-harwood-240p.webm",
+  "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+  "source": "HCTV: Hazen vs. Harwood, 2026-01-22",
+  "reviewedRange": {"start": 860, "end": 902},
+  "method": "Complete 0.25-second visual review of truth-harwood-1420-1502-v016 pages 01-09, rechecked at freeze; 480p reference at 0.125-second spacing resolves the 14:44 passing sequence. Assistant visual review, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 889.5, "uncertaintySeconds": 0.25, "note": "黑衣左篮外围跳投。", "evidence": "truth-harwood-1420-1502-v016/timeline-06.jpg"}
+  ],
+  "reviewedNegatives": [
+    {"start": 860, "end": 884.25, "note": "暂停后发球、黑衣推进及外围多次传导；14:33-14:39底角持球、运球绕出和传球。"},
+    {"start": 884.25, "end": 889.25, "note": "14:44跳起传球至左侧队友，随后运球退出禁区，传底角再回外围；不计独立投篮。", "evidence": "truth-harwood-1443-reference-v022/timeline-01.jpg"},
+    {"start": 890.5, "end": 902, "note": "白衣底线发球推进和右侧组织；14:57-14:58向底角分球，未见独立出手。"}
+  ],
+  "reference": {"provenance": "experiments/harwood-reference-v019.json", "clip": "experiments/artifacts/harwood-1443-reference-v022.mkv", "sourceStartSeconds": 883, "durationSeconds": 4, "crop": {"x": 0, "y": 0, "width": 650, "height": 370}, "codec": "ffv1", "note": "Reference only; original evaluation video unchanged. Contact sheet timestamps relative to clip. Alignment visually checked, not claimed bit-exact."},
+  "scopeNote": "Other unresolved ranges remain pending, not discarded. No algorithm predictions used for annotation or selection."
+}

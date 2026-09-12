@@ -1,0 +1,24 @@
+{
+  "video": "varsity-randolph-240p.webm",
+  "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+  "source": "HCTV: Hazen vs. Randolph, 2026-02-17",
+  "reviewedRange": {"start": 2225, "end": 2285},
+  "method": "Complete 0.5-second review of truth-randolph-3705-3805-v031 pages 01-06. Complete 0.125-second detail review of 2250-2255 (3 pages), 2255-2258 (2), 2263-2266 (2), 2272-2277 (3). Assistant visual annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 2253.5625, "uncertaintySeconds": 0.25, "note": "蓝衣左篮近筐出手。", "evidence": "truth-randolph-3730-detail-v031/timeline-02.jpg; release 2253.5-2253.625"},
+    {"time": 2255.6875, "uncertaintySeconds": 0.25, "note": "蓝衣取得进攻篮板后再次出手。", "evidence": "truth-randolph-3735-detail-v031/timeline-01.jpg; release 2255.625-2255.75"},
+    {"time": 2264.1875, "uncertaintySeconds": 0.25, "note": "白衣11号右篮中距离跳投。", "evidence": "truth-randolph-3743-detail-v031/timeline-01.jpg; release 2264.125-2264.25"},
+    {"time": 2275.1875, "uncertaintySeconds": 0.25, "note": "蓝衣左篮低位转身出手。", "evidence": "truth-randolph-3752-detail-v031/timeline-02.jpg; release 2275.125-2275.25"}
+  ],
+  "reviewedNegatives": [
+    {"start": 2225, "end": 2253.25, "note": "罚球与站位调整，按定义不计罚球；随后蓝衣推进组织。37:31是跳起接球后落地持球，再传给中路，不是出手。"},
+    {"start": 2254.5, "end": 2255.375, "note": "蓝衣争抢进攻篮板、收球，尚未进行第二次出手。"},
+    {"start": 2256.75, "end": 2263.875, "note": "白衣发球、推进及中距离持球假动作。"},
+    {"start": 2265.75, "end": 2274.875, "note": "蓝衣篮板后推进，37:53低位球员跳起接高吊球，落地仍持球，不是提前投篮。"},
+    {"start": 2276.75, "end": 2285, "note": "白衣发球、推进、半场传导和突破准备，无新增出手。"}
+  ],
+  "scopeNote": "Previous 2165-2225 and 1950-1970 remain pending, not discarded. No predictions used for annotation or selection."
+}

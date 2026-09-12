@@ -1,0 +1,18 @@
+{
+  "video": "varsity-fixed-camera-240p.mp4",
+  "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+  "source": "HCTV: Hazen vs. Enosburg, 2026-01-15",
+  "reviewedRange": { "start": 4804, "end": 4860 },
+  "method": "Complete 0.5-second visual review of 4800-4860; additional 0.125-second review of 4800-4808. Assistant-reviewed, not independently verified by a human coach. The unresolved 4800-4804 interval remains pending and is NOT declared negative or removed from the preregistered cohort.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Reviewed duration includes ordinary in-game dead balls and free-throw preparation, not exclusively live-ball time.",
+  "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    { "time": 4806.1875, "uncertaintySeconds": 0.25, "note": "白衣快攻推进至左篮，近筐向上出手，球在随后帧中离手上行。", "evidence": "truth-enosburg-8000-detail-v044/timeline-03.jpg" }
+  ],
+  "reviewedNegatives": [
+    { "start": 4807.25, "end": 4808, "note": "首次投射之后，白衣球员起跳接住下落球并收下；没有第二次投射弧线。", "evidence": "truth-enosburg-8000-detail-v044/timeline-03.jpg and timeline-04.jpg" },
+    { "start": 4808, "end": 4844.5, "note": "普通犯规后罚球准备、两次罚球及底线接球；罚球约4828和4842，不计运动战出手，第二罚后未见补篮。", "evidence": "truth-enosburg-8000-v044/timeline-01.jpg through timeline-05.jpg" },
+    { "start": 4844.5, "end": 4860, "note": "黑衣底线发球、推进、外围传球及挡拆；截至区间终点未见运动战出手。", "evidence": "truth-enosburg-8000-v044/timeline-05.jpg and timeline-06.jpg" }
+  ]
+}

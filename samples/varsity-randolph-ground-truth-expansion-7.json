@@ -1,0 +1,21 @@
+{
+  "video": "varsity-randolph-240p.webm",
+  "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+  "source": "HCTV: Hazen vs. Randolph, 2026-02-17",
+  "reviewedRange": {"start": 2590, "end": 2645},
+  "method": "Complete 0.5-second review using truth-randolph-4305-4405-v038 pages 01-06; 0.125-second details truth-randolph-detail-2610-v038 pages 01-04 and truth-randolph-detail-2631-v038 pages 01-02. Assistant visual annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 2616.9375, "uncertaintySeconds": 0.25, "note": "蓝11突破后左篮近筐出手。", "evidence": "truth-randolph-detail-2610-v038/timeline-03.jpg; release 2616.875-2617.0"},
+    {"time": 2617.6875, "uncertaintySeconds": 0.25, "note": "蓝衣篮下二次补篮，前次球下降后再次被向上投出。", "evidence": "truth-randolph-detail-2610-v038/timeline-04.jpg; release approximately 2617.625-2617.75, subsequent distinct arc toward rim"},
+    {"time": 2631.8125, "uncertaintySeconds": 0.25, "note": "白22突破后右篮跳投。", "evidence": "truth-randolph-detail-2631-v038/timeline-01.jpg; release 2631.75-2631.875"}
+  ],
+  "reviewedNegatives": [
+    {"start": 2610, "end": 2615, "note": "蓝11向右低位吊传，接球队员举球假动作后运球分回外围；不是额外投篮。"},
+    {"start": 2628, "end": 2631, "note": "白队侧翼运球交接后由22突破，不将交接动作记作出手。"},
+    {"start": 2634, "end": 2645, "note": "蓝队推进及外围传球，未见新的出手。"}
+  ],
+  "scopeNote": "2585-2590 remains explicitly pending in randolph-4305-review-v038.json due to unclear blocked attempts versus pump fakes. Other unresolved ranges remain pending. Selection is annotation-confidence limited, not based on predictions; this is a limitation and pending ranges must be resolved rather than silently discarded."
+}

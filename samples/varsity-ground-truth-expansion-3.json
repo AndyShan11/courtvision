@@ -1,0 +1,23 @@
+{
+  "video": "varsity-fixed-camera-240p.mp4",
+  "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+  "source": "HCTV: Hazen vs. Enosburg, 2026-01-15",
+  "reviewedRange": { "start": 3253, "end": 3388 },
+  "method": "Complete 1-second contact-sheet visual review; 0.25-second review of 54:13-55:03 and 55:33-56:28. Timeout interior reviewed on 1-second sheets. Assistant-reviewed, not independently verified by a human coach.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    { "time": 3284.5, "uncertaintySeconds": 0.25, "note": "黑衣左侧进攻，右侧短距离跳投。", "evidence": "truth-expansion-enosburg-fine-v010/timeline-058.jpg" },
+    { "time": 3288.125, "uncertaintySeconds": 0.25, "note": "黑衣取得进攻篮板后运球，再次近筐出手；与前次跳投分开计数。", "evidence": "truth-expansion-enosburg-fine-v010/timeline-058.jpg and timeline-059.jpg" },
+    { "time": 3295.5, "uncertaintySeconds": 0.25, "note": "白衣转换推进后右篮突破上篮。", "evidence": "truth-expansion-enosburg-fine-v010/timeline-060.jpg" }
+  ],
+  "reviewedNegatives": [
+    { "start": 3253, "end": 3274, "note": "加罚准备及等待。" },
+    { "start": 3274, "end": 3278, "note": "白衣罚球、黑衣取得球后推进；无运动战补篮。", "evidence": "truth-expansion-enosburg-fine-v010/timeline-056.jpg" },
+    { "start": 3289.25, "end": 3292, "note": "白衣取得篮板后传球受干扰并重新控球；无新的朝篮筐出手。", "evidence": "truth-expansion-enosburg-fine-v010/timeline-059.jpg" },
+    { "start": 3302, "end": 3357, "note": "暂停、球员近景、重返场地及黑衣底线发球准备。" },
+    { "start": 3357, "end": 3384, "note": "黑衣底线发球受阻、停表及重新发球准备；不是罚球。", "evidence": "truth-expansion-enosburg-fine-v010/timeline-072.jpg through timeline-078.jpg" },
+    { "start": 3384, "end": 3388, "note": "黑衣在后场接球摆脱防守，未见投篮。" }
+  ]
+}

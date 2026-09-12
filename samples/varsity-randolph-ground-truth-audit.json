@@ -1,0 +1,17 @@
+{
+  "video": "varsity-randolph-240p.webm",
+  "source": "HCTV: Hazen vs. Randolph, 2026-02-17",
+  "reviewedRange": { "start": 1530, "end": 1650 },
+  "method": "complete 1-second review from 25:00 to 30:00, followed by 0.25-second and 0.125-second contact-sheet review around every possible termination",
+  "definition": "Live-ball field-goal attempts visible in the video; free throws excluded. Dead balls and non-shooting fouls are reviewed negatives.",
+  "split": "cross-game second untouched audit; labels frozen before any algorithm run on this range",
+  "shots": [
+    { "time": 1550.5, "note": "右篮半场终结" },
+    { "time": 1560.5, "note": "右篮近筐终结" },
+    { "time": 1575.3, "note": "右篮终结后转换" },
+    { "time": 1581.0, "note": "右篮突破终结" },
+    { "time": 1608.8, "note": "左篮半场终结" },
+    { "time": 1615.8, "note": "右篮转换终结" },
+    { "time": 1625.5, "note": "右篮突破终结，随后死球" }
+  ]
+}

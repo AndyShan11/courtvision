@@ -1,0 +1,24 @@
+{
+  "video": "varsity-randolph-240p.webm",
+  "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+  "source": "HCTV: Hazen vs. Randolph, 2026-02-17",
+  "reviewedRange": {"start": 2453, "end": 2525},
+  "method": "Complete 0.5-second review of 2453-2465 in truth-randolph-3905-4105-v034 pages 11-12 and 2465-2525 in truth-randolph-4105-4205-v035 pages 01-06. Complete 0.125-second details: truth-randolph-detail-2458.5-v034 page 01, truth-randolph-detail-2468-v035 pages 01-02, -2509-v035 pages 01-02, -2521-v035 pages 01-02. Assistant visual annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "revision": 2,
+  "revisionNote": "v036: removed false positive 2524.3125 after reviewing subsequent frames through 2533. The apparent release is a lob to the baseline teammate, who catches and retains the ball rather than an arc to the rim. Original archived in experiments/artifacts/frozen-history/varsity-randolph-expansion-6-v035-original.json. No predictions examined before correction; reviewed range unchanged.",
+  "revisionEvidence": "truth-randolph-4203-4213-detail-v036/timeline-01.jpg and timeline-02.jpg: ball passed toward baseline at 2524, receiver controls it at 2525 and later pivots with possession.",
+  "shots": [
+    {"time": 2459.6875, "uncertaintySeconds": 0.25, "note": "白衣右侧底角跳投。", "evidence": "truth-randolph-detail-2458.5-v034/timeline-01.jpg; release 2459.625-2459.75"},
+    {"time": 2468.9375, "uncertaintySeconds": 0.25, "note": "蓝衣突破后左篮近筐出手。", "evidence": "truth-randolph-detail-2468-v035/timeline-01.jpg; release approximately 2468.875-2469.0"},
+    {"time": 2512.9375, "uncertaintySeconds": 0.25, "note": "白衣5号接分球后右篮左翼跳投。", "evidence": "truth-randolph-detail-2509-v035/timeline-02.jpg; release 2512.875-2513.0"}
+  ],
+  "reviewedNegatives": [
+    {"start": 2478.5, "end": 2502.5, "note": "边线死球、换人、发球站位，球在裁判或发球队员手中，没有出手。"},
+    {"start": 2510.25, "end": 2512.5, "note": "白20突破后分给底线队友，底线队友起跳后将球横向传出给外围5号，不额外计两次出手。"},
+    {"start": 2521, "end": 2525, "note": "蓝队接球、落地突破后分球，再吊传给底线队友；后续队友接球持球证实不是原先标注的外围跳投。"}
+  ],
+  "scopeNote": "Extended timeout 2385-2453 remains separately excluded; previous ambiguous ranges retained. No predictions used for annotation or selection."
+}

@@ -1,0 +1,16 @@
+{
+  "video": "varsity-fixed-camera-240p.mp4",
+  "source": "HCTV: Hazen vs. Enosburg, 2026-01-15",
+  "reviewedRange": { "start": 1650, "end": 1770 },
+  "method": "0.25-second contact sheets, visually reviewed",
+  "shots": [
+    { "time": 1666.2, "note": "左篮突破终结" },
+    { "time": 1680.8, "note": "右篮近筐终结" },
+    { "time": 1697.5, "note": "左篮突破终结" },
+    { "time": 1704.8, "note": "右篮快攻终结" },
+    { "time": 1732.8, "note": "右篮快攻终结" },
+    { "time": 1749.8, "note": "左篮半场进攻终结" },
+    { "time": 1761.0, "note": "右篮突破终结" },
+    { "time": 1767.2, "note": "左篮快攻终结" }
+  ]
+}

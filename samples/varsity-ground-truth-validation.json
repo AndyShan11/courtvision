@@ -1,0 +1,16 @@
+{
+  "video": "varsity-fixed-camera-240p.mp4",
+  "source": "HCTV: Hazen vs. Enosburg, 2026-01-15",
+  "reviewedRange": { "start": 1890, "end": 2010 },
+  "method": "0.5-second timeline review followed by 0.125-second contact sheets",
+  "definition": "Live-ball field-goal attempts only; free throws excluded.",
+  "split": "held-out validation; not used for parameter selection",
+  "shots": [
+    { "time": 1894.4, "note": "左篮半场进攻终结" },
+    { "time": 1900.0, "note": "左篮突破终结并形成罚球" },
+    { "time": 1921.2, "note": "左篮近筐终结" },
+    { "time": 1940.8, "note": "右篮突破终结" },
+    { "time": 1989.1, "note": "右篮近筐终结" },
+    { "time": 2000.8, "note": "左篮外线终结" }
+  ]
+}

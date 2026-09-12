@@ -1,0 +1,13 @@
+{
+  "video": "varsity-randolph-240p.webm",
+  "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+  "source": "HCTV: Hazen vs. Randolph, 2026-02-17",
+  "reviewedRange": {"start": 2585, "end": 2590},
+  "method": "Previously pending five seconds fully reviewed in 480p cropped reference truth-randolph-4305-reference-v040 pages01-04, sourceStart2585, spacing0.125. Compared with prior240p truth-randolph-detail-2585-v038. Assistant visual annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded.",
+  "split": "expansion frozen before any algorithm run on this range; resolved pending gap, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [{"time": 2587.9375, "uncertaintySeconds": 0.25, "note": "白衣底线队友接分球后跳投。", "evidence": "truth-randolph-4305-reference-v040/timeline-02.jpg relative2.875 and timeline-03.jpg relative3.0; sourceStart2585"}],
+  "reviewedNegatives": [{"start": 2585, "end": 2587.5, "note": "白5突破后连续持球假动作，随后向左底线队友传球。高清画面显示球在假动作后仍留手中，未形成多次被盖出手。"}],
+  "scopeNote": "Fills previously retained pending gap immediately before expansion7; no overlap. No predictions used to decide labels."
+}

@@ -1,0 +1,22 @@
+{
+  "video": "varsity-randolph-240p.webm",
+  "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+  "source": "HCTV: Hazen vs. Randolph, 2026-02-17",
+  "reviewedRange": {"start": 2345, "end": 2385},
+  "method": "Complete 0.5-second review of truth-randolph-3905-4105-v034 pages 01-04, plus complete 0.125-second detail sheets truth-randolph-detail-2352-v034, -2363.5-v034, -2372.5-v034, -2376.5-v034. Assistant visual annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 2353.1875, "uncertaintySeconds": 0.25, "note": "蓝衣左侧底角跳投。", "evidence": "truth-randolph-detail-2352-v034/timeline-01.jpg; release 2353.125-2353.25"},
+    {"time": 2364.1875, "uncertaintySeconds": 0.25, "note": "白衣20号右篮中距离跳投。", "evidence": "truth-randolph-detail-2363.5-v034/timeline-01.jpg; release 2364.125-2364.25"},
+    {"time": 2373.3125, "uncertaintySeconds": 0.25, "note": "蓝衣在左篮右侧外围接球跳投。", "evidence": "truth-randolph-detail-2372.5-v034/timeline-01.jpg; release approximately 2373.25-2373.375"},
+    {"time": 2377.3125, "uncertaintySeconds": 0.25, "note": "蓝衣抢下进攻篮板后运球调整，再次近筐出手。", "evidence": "truth-randolph-detail-2376.5-v034/timeline-01.jpg; release 2377.25-2377.375"}
+  ],
+  "reviewedNegatives": [
+    {"start": 2345, "end": 2353, "note": "底线发球及传导，39:12传回底角而非投篮。"},
+    {"start": 2374.75, "end": 2376.875, "note": "蓝衣抢到进攻篮板后下落收球、运球调整，不额外计补篮。"},
+    {"start": 2379.5, "end": 2385, "note": "白衣发球推进后比赛暂停，没有新出手。"}
+  ],
+  "scopeNote": "2385-2453 extended timeout is reviewed separately and not counted toward the 60-minute target. Earlier ambiguous ranges are retained. No predictions used to choose labels."
+}

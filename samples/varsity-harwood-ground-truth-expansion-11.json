@@ -1,0 +1,23 @@
+{
+  "video": "varsity-harwood-240p.webm",
+  "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+  "source": "HCTV: Hazen vs. Harwood, 2026-01-22",
+  "reviewedRange": {"start": 1500, "end": 1560},
+  "method": "Complete six-page 0.5-second visual review of truth-harwood-2500-v057 and complete ten-page 480p 0.25-second reference review of 1507-1514,1531-1536,1538-1543. Assistant visual annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Ordinary dead balls and non-shooting actions reviewed as negatives.",
+  "split": "expansion frozen before predictions; same game as prior Harwood test, not new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 1508.625, "uncertaintySeconds": 0.25, "note": "黑衣接底线发球后向左篮跳投。", "evidence": "truth-harwood-1507-reference-v057/timeline-01.jpg relative 1.5-1.75 plus 1507; page 02 shows ball at rim and rebound"},
+    {"time": 1539.625, "uncertaintySeconds": 0.25, "note": "白衣远侧外围接传球后向右篮跳投；完整轨迹可见，不以比分变化代替出手证据。", "evidence": "truth-harwood-1538-reference-v057/timeline-01.jpg relative 1.5-1.75 plus 1538; page 02 shows flight to rim"}
+  ],
+  "reviewedNegatives": [
+    {"start": 1500, "end": 1508.25, "note": "死球后的底线发球与传导。"},
+    {"start": 1510.75, "end": 1514, "note": "篮板争夺后黑衣低位持球，1512附近起跳向右侧队友传球；球向外侧飞离篮筐并被队友接住，不计补篮。"},
+    {"start": 1514, "end": 1531, "note": "死球换球权、白衣底线发球后推进组织。"},
+    {"start": 1531, "end": 1539.25, "note": "白衣高位回传11号，11号起跳传给远侧22号，后者接住、落下持球再回传；不是1532附近额外跳投。随后外围传导至真正出手。"},
+    {"start": 1541.5, "end": 1560, "note": "黑衣发球推进与运球失误、双方追逐低球，无新增出手。"}
+  ],
+  "reference": {"provenance": "experiments/harwood-reference-v019.json", "clips": [{"file": "harwood-1507-reference-v057.mkv", "sourceStartSeconds": 1507, "durationSeconds": 7}, {"file": "harwood-1531-reference-v057.mkv", "sourceStartSeconds": 1531, "durationSeconds": 5}, {"file": "harwood-1538-reference-v057.mkv", "sourceStartSeconds": 1538, "durationSeconds": 5}], "note": "480p annotation only; original 240p evaluation video unchanged. Visually aligned timestamps, not browser consistency evidence."},
+  "scopeNote": "Consecutive preregistered interval under experiments/harwood-additional-preregistration-v055.json. Includes ordinary dead-ball time, not exclusively live action. No ads or extended timeout; earlier ambiguous intervals retained."
+}

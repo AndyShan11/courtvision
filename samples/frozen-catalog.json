@@ -1,0 +1,462 @@
+{
+  "schemaVersion": 1,
+  "manifests": [
+    "dataset-manifest-enosburg-expanded-v054.json",
+    "dataset-manifest-randolph-expanded-v043.json",
+    "dataset-manifest-harwood-expanded-v058.json"
+  ],
+  "entries": [
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth.json",
+      "sha256": "571b35a838eaec3001a6b52442b21d421c9214060b1980a044e8333e48b38042",
+      "start": 1650,
+      "end": 1770,
+      "shots": 8,
+      "split": ""
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-validation.json",
+      "sha256": "ce5dea334ef43e0224e86413a6f322223288a698105706cc47eadd74bb8eb9da",
+      "start": 1890,
+      "end": 2010,
+      "shots": 6,
+      "split": "held-out validation; not used for parameter selection"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-test.json",
+      "sha256": "ce2a957e70e948e043934eff917ac7ce0d06ce78cc609b527bcb4d5f8f47b8fc",
+      "start": 2100,
+      "end": 2220,
+      "shots": 7,
+      "split": "final untouched test; algorithms were not run on this range before labels were frozen"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-audit.json",
+      "sha256": "4f7eba0c225a503003a0f095b5e21adf30b92ae7ad03abd6e10c3a56edf6d12f",
+      "start": 2220,
+      "end": 2524,
+      "shots": 13,
+      "split": "extended untouched audit; labels frozen before any algorithm run on this range"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-audit-2.json",
+      "sha256": "eb822f1254329b359586028ebb6a4aa72e5d2a1b53c0fa3558e3bf67dc5024fc",
+      "start": 2524,
+      "end": 2900,
+      "shots": 11,
+      "split": "second extended untouched audit; labels frozen before any algorithm run on this range"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-1.json",
+      "sha256": "adfb215aacc3a3d11b708fd3d5dda6bb291921375994d56db1226a1871696431",
+      "start": 3000,
+      "end": 3138,
+      "shots": 4,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-2.json",
+      "sha256": "9c202950d4908b37c157dc10c2d4445f7aadef8757ac1b0e74bc1ea777a871b9",
+      "start": 3138,
+      "end": 3253,
+      "shots": 2,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-3.json",
+      "sha256": "fd5b8660a3e9a9000b7e5baa59b47da65baaf1fca7a9324d3a03538738659cb5",
+      "start": 3253,
+      "end": 3388,
+      "shots": 3,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-11.json",
+      "sha256": "39754344a0461b7cadbbe1735136248784d147370de886b28199b9620c8f2733",
+      "start": 3388,
+      "end": 3448,
+      "shots": 0,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-12.json",
+      "sha256": "00e19e8792c45a5fc5dc8e7a645a525f303e7b0d1b4477a59494f48a2c7d61ea",
+      "start": 3448,
+      "end": 3508,
+      "shots": 3,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-13.json",
+      "sha256": "48819a4944cb6d49ff84fbde387ca0a04bed63791fb59090b8914d46376ed502",
+      "start": 3508,
+      "end": 3568,
+      "shots": 0,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-14.json",
+      "sha256": "e14bbe03fefb3b737c36ee63e803cb350a158c7859be231850444b5edb6dafc6",
+      "start": 3568,
+      "end": 3595,
+      "shots": 1,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-8.json",
+      "sha256": "f07bf33b15f3f73d3058baed6bc9113c41f2358bb7001174e88aa45906093d84",
+      "start": 4800,
+      "end": 4804,
+      "shots": 0,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-4.json",
+      "sha256": "9c247f437013b136fa74ed1eef3950da24e73770e00be49f69d7d3ab28779f99",
+      "start": 4804,
+      "end": 4860,
+      "shots": 1,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-5.json",
+      "sha256": "ee22c51726c4f942a284de32cd45868e9959bb86084b848f8cf2ce7c5d87475a",
+      "start": 4860,
+      "end": 4920,
+      "shots": 1,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-9.json",
+      "sha256": "11eabf76fd9920e409727534c7e2c3ba23237ff2419bd0666ebae82a7a0a9a18",
+      "start": 4920,
+      "end": 4927,
+      "shots": 1,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-6.json",
+      "sha256": "ea5283307e058d290708aada8cd40a0f20014b2febbf8d557dd69702d808fe96",
+      "start": 4927,
+      "end": 4980,
+      "shots": 0,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout; zero-shot negative interval does not by itself measure shot recall"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-7.json",
+      "sha256": "9525507fa40b786c6e0c75e590c42008970cbe0aceba4f0f20be70f0a466c771",
+      "start": 4980,
+      "end": 5040,
+      "shots": 1,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-fixed-camera-240p.mp4",
+      "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+      "path": "/courtvision/samples/varsity-ground-truth-expansion-10.json",
+      "sha256": "c0137236b36d9fa37e61f8753c8f8f186b9b23a457056cbf2f4cc3479aea7577",
+      "start": 5040,
+      "end": 5100,
+      "shots": 1,
+      "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-1.json",
+      "sha256": "7fb22d24e0c48c129a4f06577281e8b9c197a3860f463c99afe918ee04d70de4",
+      "start": 720,
+      "end": 780,
+      "shots": 2,
+      "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-5.json",
+      "sha256": "4bdbc9c46e68790d94bd3106bc8cdab5a90f70d9b57263e15cd7d911f874f529",
+      "start": 860,
+      "end": 902,
+      "shots": 1,
+      "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-2.json",
+      "sha256": "f59f629361a7643ada87822feaa64ea21ff68b4e0a76b9a66e49fb70c7a2834d",
+      "start": 902,
+      "end": 962,
+      "shots": 2,
+      "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-3.json",
+      "sha256": "6bb471f6b1d569e8242773ee38456fde9efb709c72e5cbb3d6c50c88de07fba7",
+      "start": 962,
+      "end": 1052,
+      "shots": 3,
+      "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-4.json",
+      "sha256": "22cf57cb85787f0413e03ad2096bad8c69f49d631858d5377b7428041c7a290d",
+      "start": 1052,
+      "end": 1082,
+      "shots": 1,
+      "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-6.json",
+      "sha256": "845a7def123c0d1febf7388b9646e93bf98292f7d2f1c7c779c28eee9566ef92",
+      "start": 1200,
+      "end": 1260,
+      "shots": 3,
+      "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-7.json",
+      "sha256": "6f84cae865917a16cb678dd59be75a3213d9f9df11c183f66efc2576a113cb47",
+      "start": 1260,
+      "end": 1320,
+      "shots": 5,
+      "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-8.json",
+      "sha256": "e8ab1e97c7c41bcddfd75e06b9f8ec3fa6b1b8f5d5f56717055b1a7998370638",
+      "start": 1320,
+      "end": 1380,
+      "shots": 3,
+      "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-9.json",
+      "sha256": "2a12733a3e34c4fefbb9e07268410514dc811d77d84509f2c49f20dfb27543a0",
+      "start": 1380,
+      "end": 1440,
+      "shots": 2,
+      "split": "expansion frozen before algorithm predictions; same game as existing Harwood test, not new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-10.json",
+      "sha256": "7876cca999cb8908e745c84b5987e07e35964bd5b16ae4b24afe1d40376cff30",
+      "start": 1440,
+      "end": 1500,
+      "shots": 3,
+      "split": "expansion frozen before any algorithm predictions on this range; same game as Harwood test, not new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-11.json",
+      "sha256": "3775b23ea7ce1e89e0194871d924e65e452fbe0974c0e258a32689c31e03caee",
+      "start": 1500,
+      "end": 1560,
+      "shots": 2,
+      "split": "expansion frozen before predictions; same game as prior Harwood test, not new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-expansion-12.json",
+      "sha256": "fa9e397f23bfd111be4bd2bd279ca62a457e72e088b83df5002f152fbbbf1862",
+      "start": 1560,
+      "end": 1626,
+      "shots": 1,
+      "split": "expansion frozen before predictions; same game as prior Harwood test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-harwood-240p.webm",
+      "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+      "path": "/courtvision/samples/varsity-harwood-ground-truth-test.json",
+      "sha256": "42f5c9db38bcf0a0a5f3f8eb9beb6b165509125f40a2e68d2b3f6e613949692f",
+      "start": 1680,
+      "end": 1800,
+      "shots": 6,
+      "split": "third-game untouched test; labels frozen before any algorithm run on this video"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-audit.json",
+      "sha256": "76ec6541500cfa28ee7de40ee37835ea08cbfaf4e3eeb3aed9591efd944f37a9",
+      "start": 1530,
+      "end": 1650,
+      "shots": 7,
+      "split": "cross-game second untouched audit; labels frozen before any algorithm run on this range"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-test.json",
+      "sha256": "48dda23178f5d52207fa475bef54b34316e8e1fa5e16d94566837da88df67b0d",
+      "start": 1650,
+      "end": 1770,
+      "shots": 5,
+      "split": "cross-game untouched test; labels frozen before any algorithm run on this video"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-expansion-1.json",
+      "sha256": "d6290c4f3371c44bc9232c9afa0d1ef075ea126a05d70275c7187d28371d7e19",
+      "start": 1970,
+      "end": 2040,
+      "shots": 2,
+      "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-expansion-2.json",
+      "sha256": "ee2a47b3ad828e42b535b217a941bd46c1b36dd9dc196593aff7e14995d3ac12",
+      "start": 2105,
+      "end": 2165,
+      "shots": 4,
+      "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-expansion-11.json",
+      "sha256": "d9f728688119955c2f85183c2c2d70682a92b28b6690688d5815034ededb96e8",
+      "start": 2165,
+      "end": 2225,
+      "shots": 2,
+      "split": "expansion frozen before any algorithm run on this range; resolved pending segment, not a new-game holdout"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-expansion-3.json",
+      "sha256": "58d88bce23e754acefff98a7ae0488c6bc122c22069addb334de9aa25f72b0f9",
+      "start": 2225,
+      "end": 2285,
+      "shots": 4,
+      "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-expansion-4.json",
+      "sha256": "5ff5944076d999260f7bfd58918faa25ad245804abbdec74db8c5fa970838467",
+      "start": 2285,
+      "end": 2345,
+      "shots": 5,
+      "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-expansion-5.json",
+      "sha256": "4a385477dff715700b8e4a5912c395054f9c89cce326150c999fa0b776343c0d",
+      "start": 2345,
+      "end": 2385,
+      "shots": 4,
+      "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-expansion-6.json",
+      "sha256": "2942d0a017d85c973bc942fd6fa01c787807e7dc752cee55f6bcb8397e189042",
+      "start": 2453,
+      "end": 2525,
+      "shots": 3,
+      "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-expansion-10.json",
+      "sha256": "7dd1a39a3e214232e59263b38a5ebaa6cf031408e86fef9533b36222c60d1646",
+      "start": 2525,
+      "end": 2585,
+      "shots": 1,
+      "split": "expansion frozen before any algorithm run on this range; resolved pending segment, same game as earlier Randolph test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-expansion-9.json",
+      "sha256": "9af6d12fb9de26ce4ea4838f0c2d7c8da95761d3a5cc0035b286f126a118b574",
+      "start": 2585,
+      "end": 2590,
+      "shots": 1,
+      "split": "expansion frozen before any algorithm run on this range; resolved pending gap, not a new-game holdout"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-expansion-7.json",
+      "sha256": "ef57deac9b831fb6541efd85db736370d294ec7e06d284215ba9dedd2fc837e5",
+      "start": 2590,
+      "end": 2645,
+      "shots": 3,
+      "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout"
+    },
+    {
+      "video": "varsity-randolph-240p.webm",
+      "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+      "path": "/courtvision/samples/varsity-randolph-ground-truth-expansion-8.json",
+      "sha256": "5893ae084bd8e7def4a810af31ecf15fd4db2bcb7aad9edbc416648db7376c6d",
+      "start": 2645,
+      "end": 2700,
+      "shots": 2,
+      "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout"
+    }
+  ],
+  "durationSeconds": 3600,
+  "shots": 140
+}

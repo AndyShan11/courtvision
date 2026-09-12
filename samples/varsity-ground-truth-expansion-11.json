@@ -1,0 +1,16 @@
+{
+  "video": "varsity-fixed-camera-240p.mp4",
+  "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+  "source": "HCTV: Hazen vs. Enosburg, 2026-01-15",
+  "reviewedRange": { "start": 3388, "end": 3448 },
+  "method": "All six 0.5-second timeline pages reviewed; 480p reference at 3391-3396 reviewed at 0.25 seconds, plus 3393-3394 at 0.125 seconds to resolve earlier drive/contact ambiguity. Assistant-reviewed, not independently verified by a human coach.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Duration includes foul administration, substitutions and free-throw preparation, not exclusively live-ball time.",
+  "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "annotationReferenceSha256": "f0e32d0b117342fd52e6605eee098fd899e596f0935d66edb00ac3571232973b",
+  "shots": [],
+  "reviewedNegatives": [
+    { "start": 3388, "end": 3396, "note": "黑衣推进后低位运球突破受接触倒地，球从低处向左侧滚出；没有向篮筐的投射释放。上举手臂来自白衣防守人，不能据此标记黑衣投篮。", "evidence": "truth-enosburg-5628-v051/timeline-01.jpg; truth-enosburg-5631-reference-v051/timeline-01.jpg through timeline-03.jpg; truth-enosburg-5633-detail-v051/timeline-01.jpg (source offset +3391)" },
+    { "start": 3396, "end": 3448, "note": "犯规处置、换人及罚球准备；3432附近为罚球，不计运动战出手。该段以死球为主，用于检验误报，不能独立证明召回率。", "evidence": "truth-enosburg-5628-v051/timeline-01.jpg through timeline-06.jpg" }
+  ]
+}

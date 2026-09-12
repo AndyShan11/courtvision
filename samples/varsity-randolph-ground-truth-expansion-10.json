@@ -1,0 +1,19 @@
+{
+  "video": "varsity-randolph-240p.webm",
+  "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+  "source": "HCTV: Hazen vs. Randolph, 2026-02-17",
+  "reviewedRange": {"start": 2525, "end": 2585},
+  "method": "Complete 0.5-second review truth-randolph-4205-4305-v036 pages01-06, reread v041. Earlier0.125-second details4203-4213-v036 and2553/2580-v037. Catch ambiguity resolved with480p truth-randolph-42335-reference-v041 pages01-02 and truth-randolph-42348-reference-v041 page01 (0.041666667-second spacing). Reference clip sourceStart2553.5. Assistant visual annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Normal in-game dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; resolved pending segment, same game as earlier Randolph test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [{"time": 2531.1875, "uncertaintySeconds": 0.25, "note": "蓝衣底线持球调整后跳投。", "evidence": "truth-randolph-4203-4213-detail-v036/timeline-04.jpg; release approximately2531.125-2531.25, subsequent visible arc toward rim"}],
+  "reviewedNegatives": [
+    {"start": 2525, "end": 2530.5, "note": "蓝衣接前段吊传后在底线持球、转身、假动作，没有多次出手。"},
+    {"start": 2536, "end": 2552, "note": "比赛内死球、换人及发球站位，没有出手。"},
+    {"start": 2554.5, "end": 2555.5, "note": "蓝24跳起双手迎接高球，白22同时伸手触球；球在接球时向左脱离并下降。高清密集帧未见接球后的向篮筐投射动作，记接球被破坏而不是投篮被盖。", "evidence": "truth-randolph-42348-reference-v041/timeline-01.jpg relative1.25-1.71, sourceStart2553.5"},
+    {"start": 2556, "end": 2567, "note": "出界后等待发球，普通连续比赛死球负例。"},
+    {"start": 2580, "end": 2585, "note": "白队低位与外围传导后突破；43:04失衡后仍运球，无投篮。"}
+  ],
+  "scopeNote": "Entire previously pending60-second range restored to evaluation, not an easy-only subsection. Includes normal in-game dead balls, not60seconds of live-ball play. No algorithm predictions used; other unresolved ranges remain retained."
+}

@@ -1,0 +1,25 @@
+{
+  "video": "varsity-fixed-camera-240p.mp4",
+  "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+  "source": "HCTV: Hazen vs. Enosburg, 2026-01-15",
+  "reviewedRange": { "start": 3000, "end": 3138 },
+  "method": "Complete 1-second contact-sheet visual review; live-ball candidate windows reviewed at 0.25 seconds; two ambiguous contact sequences additionally reviewed at 0.125 seconds. These are assistant-reviewed labels, not independently verified by a human coach.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this time range; same game as previous splits, NOT a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "revision": 2,
+  "revisionNote": "Note-only correction before algorithm evaluation: removed unsupported miss/rebound outcome at 3122.125; all timestamps, counts and range unchanged. Original archived under experiments/artifacts/frozen-history/varsity-ground-truth-expansion-1-original.json.",
+  "previousSha256": "1398befcff143007c8161f8b4ac8a4bd06e5bd63a7fc67c853a8a3e648511c98",
+  "shots": [
+    { "time": 3017.125, "uncertaintySeconds": 0.125, "note": "左篮黑衣突破近筐出手，受防守干扰后倒地。" },
+    { "time": 3019.125, "uncertaintySeconds": 0.125, "note": "左篮另一黑衣球员拾球后再次近筐终结，遭封堵。" },
+    { "time": 3083.5, "uncertaintySeconds": 0.25, "note": "左篮黑衣近筐得分，随后加罚。" },
+    { "time": 3122.125, "uncertaintySeconds": 0.125, "note": "右篮白衣突破近筐出手。" }
+  ],
+  "reviewedNegatives": [
+    { "start": 3000, "end": 3003, "note": "底线发球，无投篮。" },
+    { "start": 3021, "end": 3078, "note": "死球及发球前等待。" },
+    { "start": 3085, "end": 3116, "note": "加罚准备及罚球，无运动战投篮。" },
+    { "start": 3130, "end": 3138, "note": "后场持球施压、倒地及死球，无投篮。" }
+  ]
+}

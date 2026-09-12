@@ -1,0 +1,20 @@
+{
+  "video": "varsity-randolph-240p.webm",
+  "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+  "source": "HCTV: Hazen vs. Randolph, 2026-02-17",
+  "reviewedRange": {"start": 1970, "end": 2040},
+  "method": "Complete 0.5-second visual review of truth-randolph-3230-3400-v027 pages 03-09; 0.25-second detail at both visible shots, and complete 0.125-second v028 review of 32:54-32:58, 33:06-33:10, 33:23-33:25, 33:31-33:34. Assistant annotation, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as earlier Randolph test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 1979.875, "uncertaintySeconds": 0.25, "note": "蓝衣右侧外围向左篮跳投。", "evidence": "truth-randolph-3259-detail-v027/timeline-01.jpg; release 1979.75-1980.0"},
+    {"time": 2022.375, "uncertaintySeconds": 0.25, "note": "蓝衣右侧外围向左篮跳投。", "evidence": "truth-randolph-3342-detail-v027/timeline-01.jpg; release 2022.25-2022.5"}
+  ],
+  "reviewedNegatives": [
+    {"start": 1970, "end": 1979.5, "note": "底线发球准备及传导；32:54-32:57球仍由底线发球人持有，场内多人举手切入不是投篮；随后横传外围。"},
+    {"start": 1981.75, "end": 2022.125, "note": "白衣推进时与蓝衣发生接触，蓝衣倒地，白衣没有完成投篮动作；随后裁判处理死球。33:23持球变向回传，33:31-33:33假动作后传球，均非投篮。其余半场运球传导。"},
+    {"start": 2024.25, "end": 2040, "note": "篮板争抢、球落地及随后死球换人，无独立补篮。"}
+  ],
+  "scopeNote": "Earlier 1950-1970 remains pending because a close-range action is occluded, not discarded. All preregistered unresolved ranges must be revisited. No algorithm predictions used in annotation or selection; this is partial completion of the expansion, not final evidence of unbiased full-range performance."
+}

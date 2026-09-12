@@ -1,0 +1,21 @@
+{
+  "video": "varsity-harwood-240p.webm",
+  "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+  "source": "HCTV: Hazen vs. Harwood, 2026-01-22",
+  "reviewedRange": {"start": 1560, "end": 1626},
+  "method": "Complete seven-page 0.5-second visual review of truth-harwood-2600-v058; complete six-page 480p 0.25-second reference review of 1574-1579 and 1612-1617. Assistant visual labels, not independently coach-verified.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Ordinary dead balls are reviewed negatives, not live playing time.",
+  "split": "expansion frozen before predictions; same game as prior Harwood test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 1613.875, "uncertaintySeconds": 0.25, "note": "黑衣突破至左篮近筐举球出手，球飞向篮筐；之后死球及罚球准备。", "evidence": "truth-harwood-1612-reference-v058/timeline-01.jpg relative 1.75 and timeline-02.jpg relative 2.0 plus 1612; page 02 shows full ball flight to basket"}
+  ],
+  "reviewedNegatives": [
+    {"start": 1560, "end": 1574, "note": "前次运球失误后的边线恢复与白衣组织、传导，无出手。"},
+    {"start": 1574, "end": 1579, "note": "白衣底线突破持球后将球传至篮下队友，再回传外侧，持球举起不构成投篮。480p序列显示连续接传球。"},
+    {"start": 1579, "end": 1613.5, "note": "白衣外围传导被断；黑衣推进及长时间半场运球、传导，直到1613附近突破；没有更早独立出手。"},
+    {"start": 1615.5, "end": 1626, "note": "死球裁判管理、换人和罚球站位准备，没有额外运动战出手。"}
+  ],
+  "reference": {"provenance": "experiments/harwood-reference-v019.json", "clips": [{"file": "harwood-1574-reference-v058.mkv", "sourceStartSeconds": 1574, "durationSeconds": 5}, {"file": "harwood-1612-reference-v058.mkv", "sourceStartSeconds": 1612, "durationSeconds": 5}], "note": "480p annotation only; evaluation remains original 240p source. Visual alignment is not browser consistency evidence."},
+  "scopeNote": "Consecutive portion of preregistered 1380-1680 range. Endpoint selected before review to complete minimum 60-minute dataset duration, not selected by algorithm results. Ordinary dead-ball time included; no advertisements or extended timeout. Earlier ambiguous ranges and remaining 1626-1680 preregistration retained."
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "video": "varsity-fixed-camera-240p.mp4",
+    "videoSha256": "0acf2aa92465f67482fcf97b4d306d36e34ce6c8f49f60df9b0704c545f8e871",
+    "path": "/courtvision/samples/frame-timing-varsity-fixed-camera-240p.json",
+    "sha256": "bcc36b6cdc53607b4a7b2d9d2b8d651b5d0e4133eb1680f51cb40347e5b7aaa4",
+    "frames": 186194
+  },
+  {
+    "video": "varsity-randolph-240p.webm",
+    "videoSha256": "6e619ee9341aade180d8e59dfa2524f671ec6f23ab954d95deeefa3c92ad9645",
+    "path": "/courtvision/samples/frame-timing-varsity-randolph-240p.json",
+    "sha256": "c6f6634c1f6b7c84771e9965acc97b5f5916f1a39a6bd53ec40d0bfbe8dbeec1",
+    "frames": 353956
+  },
+  {
+    "video": "varsity-harwood-240p.webm",
+    "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+    "path": "/courtvision/samples/frame-timing-varsity-harwood-240p.json",
+    "sha256": "efc9b9634d23391194b357390d3192217da99003aa2ce9691362ce34093841a1",
+    "frames": 247504
+  }
+]

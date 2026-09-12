@@ -1,0 +1,20 @@
+{
+  "video": "varsity-harwood-240p.webm",
+  "videoSha256": "d83011de39d8d4f223332f333057b2c442e426db2fb425506ba7f4dc51ecf924",
+  "source": "HCTV: Hazen vs. Harwood, 2026-01-22",
+  "reviewedRange": {"start": 720, "end": 780},
+  "method": "Complete 0.25-second contact-sheet visual review of all 12 pages; additional 0.125-second review of 12:49.5-12:52. Assistant-reviewed, not independently verified by a human coach.",
+  "definition": "Visible live-ball field-goal attempts including blocked attempts; free throws excluded. Dead balls and non-shooting possessions are reviewed negatives.",
+  "split": "expansion frozen before any algorithm run on this range; same game as prior Harwood test, not a new-game holdout",
+  "freezeDate": "2026-09-11",
+  "shots": [
+    {"time": 738.25, "uncertaintySeconds": 0.25, "note": "白衣右篮突破，近筐起跳出手。", "evidence": "truth-harwood-1200-1300-v015/timeline-04.jpg"},
+    {"time": 770.25, "uncertaintySeconds": 0.25, "note": "黑衣左篮突破，受防守干扰后近筐出手。", "evidence": "truth-harwood-1250-v015/candidate-contact-sheet.jpg"}
+  ],
+  "reviewedNegatives": [
+    {"start": 720, "end": 737.75, "note": "死球、底线发球及白衣推进组织。"},
+    {"start": 739, "end": 769.5, "note": "黑衣取球推进、低位持球转身、回传及外围组织；12:42-12:44突破后回传外围，未见朝篮筐出手。"},
+    {"start": 771.125, "end": 780, "note": "白衣跳起争抢篮板后推进并组织，未见黑衣独立补篮或白衣新的投篮。", "evidence": "truth-harwood-1250-v015/candidate-contact-sheet.jpg; truth-harwood-1200-1300-v015/timeline-11.jpg and timeline-12.jpg"}
+  ],
+  "scopeNote": "Adjacent 10:00-12:00 remains unresolved and unfrozen. This does not exclude that interval from the preregistered expansion; it remains pending review. No algorithm predictions used for selection or annotation."
+}
