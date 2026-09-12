@@ -72,7 +72,7 @@ export function addReviewCoverage(session,start,end){
 }
 export function reviewSummary(session){
   const covered=session.coverage.reduce((s,r)=>s+r.end-r.start,0),duration=session.range.end-session.range.start;
-  return {mode:session.mode,range:session.range,timingMs:clone(session.timing),activeMs:Object.values(session.timing).reduce((a,b)=>a+b,0),wallMs:(session.completedAt??session.lastTick)-session.createdAt,coverageSeconds:covered,coverageFraction:covered/duration,pending:session.events.filter(e=>e.status==='pending').length,confirmed:session.events.filter(e=>e.status==='confirmed').length,deleted:session.events.filter(e=>e.status==='deleted').length,manualAdditions:session.events.filter(e=>e.origin==='manual'&&e.status==='confirmed').length,accuracy:null,accuracyNote:'未导入独立参考答案；不能以确认率代替准确率'};
+  return {mode:session.mode,range:session.range,timingMs:clone(session.timing),activeMs:['review','sweep','report'].reduce((sum,k)=>sum+session.timing[k],0),wallMs:(session.completedAt??session.lastTick)-session.createdAt,coverageSeconds:covered,coverageFraction:covered/duration,pending:session.events.filter(e=>e.status==='pending').length,confirmed:session.events.filter(e=>e.status==='confirmed').length,deleted:session.events.filter(e=>e.status==='deleted').length,manualAdditions:session.events.filter(e=>e.origin==='manual'&&e.status==='confirmed').length,accuracy:null,accuracyNote:'未导入独立参考答案；不能以确认率代替准确率'};
 }
 export function uncoveredReviewRanges(session){
   const gaps=[];let cursor=session.range.start;
@@ -120,6 +120,7 @@ export function validateStoredReview(s,videoIdentity){
   if(s.report!==undefined){if(!s.report||typeof s.report!=='object'||Array.isArray(s.report))throw Error('保存的报告无效');for(const [field,value] of Object.entries(s.report))if(!['observation','evidence','training','followUp'].includes(field)||typeof value!=='string'||value.length>3000)throw Error('保存的报告字段无效');}
   for(const t of ['createdAt','lastTick'])finite(s[t],'保存时间');
   if(s.lastTick<s.createdAt||!s.timing||['review','sweep','report'].some(k=>!Number.isFinite(s.timing[k])||s.timing[k]<0))throw Error('保存的计时无效');
+  if(Object.keys(s.timing).some(k=>!['review','sweep','report'].includes(k)))throw Error('计时只允许审核、补漏、报告三个字段');
   if(['review','sweep','report'].reduce((sum,k)=>sum+s.timing[k],0)>s.lastTick-s.createdAt+1e-6)throw Error('主动时间超过任务墙钟时间');
   let end=s.range.start;for(const c of s.coverage){if(!Number.isFinite(c.start)||!Number.isFinite(c.end)||c.start<end||c.end<=c.start||c.end>s.range.end)throw Error('保存的播放覆盖无效');end=c.end;}
   if(s.status==='finished'&&(!Number.isFinite(s.completedAt)||s.completedAt!==s.lastTick||s.completedAt<s.createdAt||!s.paused||!Array.isArray(s.completionWarnings)))throw Error('保存的锁定状态无效');
