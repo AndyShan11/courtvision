@@ -27,10 +27,19 @@ export function evaluateReview(session,reference){
   // Preserve original reference for reproducible export and re-evaluation.
   const referenceCopy=JSON.parse(JSON.stringify(reference));
   const predictions=session.events.filter(e=>e.status==='confirmed'&&reference.scope.includes(e.label));
-  const pairs=[],falsePositives=[],falseNegatives=[];
+  const pairs=[],falsePositives=[],falseNegatives=[],matchingAmbiguities=[];
+  function noteMultipleCandidates(items,others,side){
+    let left=0,right=0;
+    for(const item of items){
+      while(left<others.length&&others[left].time<item.time-REVIEW_MATCH_SECONDS)left++;
+      while(right<others.length&&others[right].time<=item.time+REVIEW_MATCH_SECONDS)right++;
+      if(right-left>1)matchingAmbiguities.push({side,time:item.time,label:item.label,candidates:right-left});
+    }
+  }
   for(const label of reference.scope){
     const p=predictions.filter(e=>e.label===label).sort((a,b)=>a.time-b.time);
     const g=reference.events.map((e,index)=>({...e,referenceIndex:index})).filter(e=>e.label===label).sort((a,b)=>a.time-b.time);
+    noteMultipleCandidates(p,g,'prediction');noteMultipleCandidates(g,p,'reference');
     let i=0,j=0;
     while(i<p.length&&j<g.length){
       if(p[i].time<g[j].time-REVIEW_MATCH_SECONDS){falsePositives.push(p[i++]);}
@@ -43,7 +52,8 @@ export function evaluateReview(session,reference){
   const wrongResults=checked.filter(p=>p.prediction.result!=='unknown'&&p.prediction.result!==p.reference.result);
   const unknownResults=checked.filter(p=>p.prediction.result==='unknown');
   const tp=pairs.length,fp=falsePositives.length,fn=falseNegatives.length;
-  return {reference:referenceCopy,protocol:REVIEW_PROTOCOL.version,toleranceSeconds:REVIEW_MATCH_SECONDS,scope:reference.scope,referenceProvenance:reference.provenance,referenceIndependence:'来源由导入者声明，系统未独立证实',exhaustiveClaim:reference.exhaustive,predictions:predictions.length,referenceEvents:reference.events.length,truePositives:tp,falsePositiveCount:fp,falseNegativeCount:fn,precision:predictions.length?tp/predictions.length:null,recall:reference.events.length?tp/reference.events.length:null,f1:2*tp+fp+fn?2*tp/(2*tp+fp+fn):null,resultChecked:checked.length,resultWrong:wrongResults.length,resultUnknown:unknownResults.length,resultErrorRate:checked.length?(wrongResults.length+unknownResults.length)/checked.length:null,pairs,falsePositives,falseNegatives,summary:reviewSummary(session),warnings:[...(session.completionWarnings??[]),...(!reference.exhaustive?['参考答案不完整：未匹配标记只能称为未匹配，不能确定为误报；召回仅针对已知事件']:[])]};
+  const matchingWarnings=matchingAmbiguities.length?[`${matchingAmbiguities.length}个事件在±1秒内有多个时间匹配候选；当前按时间顺序配对，需回看核对，不代表标注必错。`]:[];
+  return {matchingAmbiguities,reference:referenceCopy,protocol:REVIEW_PROTOCOL.version,toleranceSeconds:REVIEW_MATCH_SECONDS,scope:reference.scope,referenceProvenance:reference.provenance,referenceIndependence:'来源由导入者声明，系统未独立证实',exhaustiveClaim:reference.exhaustive,predictions:predictions.length,referenceEvents:reference.events.length,truePositives:tp,falsePositiveCount:fp,falseNegativeCount:fn,precision:predictions.length?tp/predictions.length:null,recall:reference.events.length?tp/reference.events.length:null,f1:2*tp+fp+fn?2*tp/(2*tp+fp+fn):null,resultChecked:checked.length,resultWrong:wrongResults.length,resultUnknown:unknownResults.length,resultErrorRate:checked.length?(wrongResults.length+unknownResults.length)/checked.length:null,pairs,falsePositives,falseNegatives,summary:reviewSummary(session),warnings:[...matchingWarnings,...(session.completionWarnings??[]),...(!reference.exhaustive?['参考答案不完整：未匹配标记只能称为未匹配，不能确定为误报；召回仅针对已知事件']:[])]};
 }
 export function reviewReportText(session,evaluation=null){
   const s=reviewSummary(session),pct=x=>x==null?'未计算':`${(x*100).toFixed(1)}%`;

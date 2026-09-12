@@ -31,6 +31,7 @@ export function compareReviewTrials(first,second){
     if(r.session.unmeasuredGapMs>0)reasons.push(`${name}存在未计入主动时间的长间隔`);
     if(!r.evaluation)reasons.push(`${name}缺少独立参考答案`);
     else if(!r.evaluation.exhaustiveClaim)reasons.push(`${name}参考答案未声明完整`);
+    if(r.evaluation?.matchingAmbiguities?.length)reasons.push(`${name}存在多候选时间匹配，需逐回合核对`);
     if(r.evaluation&&r.summary.confirmed>r.evaluation.predictions)reasons.push(`${name}有已确认事件超出参考标签范围`);
   }
   if(manual.evaluation&&assisted.evaluation&&[...manual.evaluation.scope].sort().join('|')!==[...assisted.evaluation.scope].sort().join('|'))reasons.push('核验标签范围不同');
