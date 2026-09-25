@@ -1253,6 +1253,7 @@ mountReviewWorkbench(()=>({src:reviewSourceReady(video,state.reviewExpectedSrc)?
 
 function showPage() {
   const page = ["workspace", "segments", "report"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "workspace";
+  document.body.dataset.page = page;
   for (const id of ["workspace", "segments", "report"]) $("#" + id).hidden = id !== page;
   document.querySelector(".metric-grid").hidden = page === "workspace";
   document.querySelectorAll("nav a").forEach((link) => {
@@ -1263,7 +1264,7 @@ function showPage() {
   });
   const names = { workspace: "比赛工作台", segments: "回合库", report: "教练报告" };
   document.querySelector(".eyebrow").textContent = names[page];
-  document.querySelector("h1").textContent = { workspace: "录像分析与逐条复核", segments: "回合库", report: "教练报告" }[page];
+  document.querySelector("h1").textContent = { workspace: "录像分析与逐条复核", segments: "回合库", report: "数据报告" }[page];
   window.scrollTo(0, 0);
 }
 window.addEventListener("hashchange", showPage);

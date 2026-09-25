@@ -28,25 +28,27 @@
       <header class="topbar">
         <div>
           <p class="eyebrow">比赛工作台 / 新分析</p>
-          <h1>把录像变成能执行的比赛结论</h1>
+          <h1>比赛工作台</h1>
         </div>
         <div class="header-actions">
+          <details class="sample-menu"><summary class="button ghost">示例与测试录像 <span>⌄</span></summary><div class="sample-options">
           <button id="demoButton" class="button ghost">载入演示数据</button>
           <button id="sampleButton" class="button ghost">载入实验录像</button>
           <button id="fixedSampleButton" class="button ghost">载入完整比赛</button>
           <button id="crossGameButton" class="button ghost">载入第二场测试</button>
           <button id="thirdGameButton" class="button ghost">载入第三场测试</button>
           <button id="proxySampleButton" class="button ghost">载入快速测试片段</button>
+          </div></details>
           <label class="button primary" for="videoInput">选择本地录像</label>
           <input id="videoInput" type="file" accept="video/*" hidden />
         </div>
       </header>
 
-      <section class="panel" style="margin-bottom:24px;padding:24px" aria-label="历史分析记录">
-        <h2>已有录像，已有分析结果</h2>
-        <p>活塞 vs 尼克斯：168.8分钟录像、699条事件；另有号码识别与战术实验记录。无需重新上传，跨设备直接查看。</p>
+      <section class="match-overview" aria-label="历史分析记录">
+        <div class="match-heading"><div><p class="eyebrow">已保存实验 / NBA</p><h2>活塞 <span class="versus">vs</span> 尼克斯</h2></div><span class="archive-badge">公开实验档案</span></div>
+        <div id="history-summary" class="history-summary" aria-label="事件定位状态分布"></div>
         <p id="history-load-status" role="status">正在读取历史记录…</p>
-        <p>候选不等于正确；未获公开许可的原片未上传。你的私人浏览器记录不会自动公开。</p>
+        <p class="archive-note">候选不代表识别正确。原片未公开托管；个人标注只保存在当前浏览器。</p>
       </section>
 
       <section id="workspace" class="workspace-grid">
