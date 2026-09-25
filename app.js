@@ -21,6 +21,7 @@ const $ = (selector) => document.querySelector(selector);
 let frozenCatalog = [];
 let renderedFrozenVideo = null;
 const savedDatasets = loadDatasets();
+let historyWorkspace=null,previousHistoryDataset='legacy';
 const state = {
   datasets: savedDatasets,
   videoKey: "legacy",
@@ -79,6 +80,7 @@ function loadDatasets() {
 }
 
 function switchDataset(key) {
+  historyWorkspace?.close();
   state.reviewExpectedSrc = null;
   state.reviewCandidateRun = null;
   state.reviewBlob = null;
@@ -1061,6 +1063,7 @@ fetch('/courtvision/samples/frozen-catalog.json').then(response => {
 $("#videoInput").addEventListener("change", (event) => {
   const file = event.target.files[0];
   if (!file) return;
+  if(historyWorkspace?.active){historyWorkspace.connect(file);return;}
   switchDataset(`local:${file.name}:${file.size}:${file.lastModified}`);
   state.reviewBlob = file;
   state.hoop = null;
@@ -1230,6 +1233,7 @@ $("#printReport").addEventListener("click", () => window.print());
 $("#undoReview").addEventListener("click", undoLastReview);
 
 document.addEventListener("keydown", (event) => {
+  if(historyWorkspace?.active)return;
   if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) return;
   if (event.code === "Space") { event.preventDefault(); video.paused ? video.play() : video.pause(); }
   if (event.key.toLowerCase() === "a") $("#markStart").click();
@@ -1264,3 +1268,11 @@ function showPage() {
 }
 window.addEventListener("hashchange", showPage);
 showPage();
+import {mountHistoryWorkspace} from './history-workspace.mjs';
+function clearHistoryVideo(){++videoLoadSequence;video.pause();if(video.src.startsWith('blob:')){indexedFrames.forget(video.src);URL.revokeObjectURL(video.src);}video.removeAttribute('src');video.load();state.videoDuration=0;state.hoop=null;state.viewReference=null;state.pendingReferenceCapture=false;videoStage.classList.add('empty');showHoopMarker();}
+historyWorkspace=mountHistoryWorkspace({
+ prepare(){if(!historyWorkspace.active)previousHistoryDataset=state.videoKey;switchDataset('public-history:det-nyk');clearHistoryVideo();render();location.hash='workspace';showPage();},
+ clearVideo:clearHistoryVideo,
+ async attach(url,file){state.reviewBlob=file;await loadVideoSource(url,'活塞 vs 尼克斯 · 本机原片','已保存事件 · 本机回看，不上传');},
+ restore(){switchDataset(previousHistoryDataset);clearHistoryVideo();render();$('#videoTitle').textContent='已恢复个人标注，请重新选择对应录像';$('#videoMeta').textContent='本地处理 · 不上传云端';}
+});

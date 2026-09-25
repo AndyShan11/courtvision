@@ -14,7 +14,6 @@
         <span><strong>锋线</strong><small>COURTVISION CN</small></span>
       </a>
       <nav>
-        <a href="./history.html"><span>▣</span>历史分析记录</a>
         <a class="active" href="#workspace"><span>◫</span>比赛工作台</a>
         <a href="#segments"><span>⌁</span>回合库</a>
         <a href="#report"><span>▤</span>教练报告</a>
@@ -46,7 +45,8 @@
       <section class="panel" style="margin-bottom:24px;padding:24px" aria-label="历史分析记录">
         <h2>已有录像，已有分析结果</h2>
         <p>活塞 vs 尼克斯：168.8分钟录像、699条事件；另有号码识别与战术实验记录。无需重新上传，跨设备直接查看。</p>
-        <a class="button primary" href="./history.html">查看历史分析记录 →</a>
+        <button class="button primary" id="open-history" disabled>在工作台载入历史比赛</button>
+        <button class="button ghost" id="close-history" hidden>返回个人标注</button><p id="history-load-status" role="status">正在读取历史记录…</p>
         <p>候选不等于正确；未获公开许可的原片未上传。你的私人浏览器记录不会自动公开。</p>
       </section>
 
@@ -85,6 +85,7 @@
           </div>
         </article>
 
+        <aside id="history-events-panel" class="panel" style="padding:20px" hidden><h2>已保存事件</h2><p>699条事件 · 303条定位候选 · 288条有歧义。标签来自事件表，不是视觉识别结论。</p><label>状态<select id="history-status"><option value="">全部状态</option><option value="candidate">定位候选</option><option value="ambiguous">有歧义</option><option value="unmatched">未定位</option><option value="outside">观察范围外</option></select></label><label>事件<select id="history-kind"><option value="">全部类型</option></select></label><label>搜索<input id="history-search" type="search" placeholder="球员或事件"></label><p id="history-count"></p><div id="history-events" style="max-height:500px;overflow:auto"></div></aside>
         <aside class="panel analysis-panel">
           <div class="panel-head">
             <div><span class="kicker">标注控制台</span><h2>回合信息</h2></div>
