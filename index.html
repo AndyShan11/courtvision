@@ -44,6 +44,12 @@
         </div>
       </header>
 
+      <div class="engine-switch" role="group" aria-label="工作模式"><button id="engine-public" class="button ghost" aria-pressed="true">公开实验记录</button><button id="engine-local" class="button ghost" aria-pressed="false">本机分析 · 导入新比赛</button></div>
+      <section id="local-engine" class="panel" hidden>
+        <div class="panel-head"><div><h2>本机分析</h2><p>录像＋同场事件表 → 设置节次和时钟框 → 分析 → 复核与下载</p></div><button id="local-engine-connect" class="button primary">连接／重试</button></div>
+        <div class="engine-help"><p id="local-engine-status" role="status">首次使用：先启动电脑上的“启动篮球分析.cmd”，再点连接。仅支持运行本地服务的这台电脑，不是云端计算。</p><details><summary>怎么使用？</summary><ol><li>启动本机分析服务；源码环境可在 mvp-lab 文件夹运行 npm start。</li><li>点击连接。如果浏览器提示访问本地网络，请允许。</li><li>看旧比赛：在下方“历史分析”列表选择已完成任务，不必重新导入原片。</li><li>分析新比赛：点击“新建分析”，选择录像和 JSON／JSONL 事件表（含节次、比赛时间）。</li><li>暂停到记分牌清晰的画面，框选比赛时钟，并添加各节的视频起止区间。确认资料权限后开始分析。</li><li>完成后点击事件回看，确认、排除或修正，再下载片段或索引包。</li></ol><p>关闭页面不会取消后台任务；取消请用分析区的“取消”按钮。切回公开记录不会公开你的本地数据。若浏览器阻止嵌入，可<a href="http://127.0.0.1:4183/alignment.html" target="_blank" rel="noopener">直接打开本机工作台</a>。</p></details></div>
+        <iframe id="local-engine-frame" title="本机篮球录像分析工作台" allow="local-network-access" hidden></iframe>
+      </section>
       <section class="match-overview" aria-label="历史分析记录">
         <div class="match-heading"><div><p class="eyebrow">已保存实验 / NBA</p><h2>活塞 <span class="versus">vs</span> 尼克斯</h2></div><span class="archive-badge">公开实验档案</span></div>
         <div id="history-summary" class="history-summary" aria-label="事件定位状态分布"></div>
@@ -231,5 +237,6 @@
     </main>
     <div id="toast" role="status" aria-live="polite"></div>
     <script type="module" src="/courtvision/app.js"></script>
+    <script type="module" src="/courtvision/local-engine.mjs"></script>
   </body>
 </html>

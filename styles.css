@@ -234,6 +234,7 @@ footer { padding: 28px 0 0; text-align: center; color: #58615d; font-size: 10px;
 @media(max-width:760px){.review-grid{grid-template-columns:1fr}.review-dialog{padding:12px}.review-dialog input{max-width:135px}}
 
 /* Compact product workspace. Independently implemented; references in DESIGN-REFERENCES.md. */
+.engine-switch{display:flex;gap:8px;margin-bottom:20px}.engine-switch [aria-pressed=true]{background:#273346;border-color:#6a82ab}.engine-help{padding:16px 20px;color:var(--muted);font-size:12px}.engine-help summary{cursor:pointer;color:var(--text)}.engine-help li{margin:8px 0}.engine-help a{color:var(--accent)}#local-engine .panel-head p{font-size:12px;color:var(--muted);margin:8px 0 0}#local-engine-frame{display:block;width:100%;height:1450px;border:0;border-top:1px solid var(--line);background:var(--bg)}body.local-engine-active .match-overview,body.local-engine-active #workspace,body.local-engine-active #history-results,body.local-engine-active .topbar>.header-actions{display:none}body:not([data-page=workspace]) #local-engine,body:not([data-page=workspace]) .engine-switch{display:none}
 body:not([data-page=workspace]) .match-overview,body:not([data-page=workspace]) #history-results{display:none}
 body{background:var(--bg);font-size:13px;line-height:1.5}
 .sidebar{background:#151619;padding:26px 14px}
