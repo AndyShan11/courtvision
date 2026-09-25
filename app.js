@@ -1271,6 +1271,7 @@ showPage();
 import {mountHistoryWorkspace} from './history-workspace.mjs';
 function clearHistoryVideo(){++videoLoadSequence;video.pause();if(video.src.startsWith('blob:')){indexedFrames.forget(video.src);URL.revokeObjectURL(video.src);}video.removeAttribute('src');video.load();state.videoDuration=0;state.hoop=null;state.viewReference=null;state.pendingReferenceCapture=false;videoStage.classList.add('empty');showHoopMarker();}
 historyWorkspace=mountHistoryWorkspace({
+ canAutoOpen(){return datasetRevision===0;},
  prepare(){if(!historyWorkspace.active)previousHistoryDataset=state.videoKey;switchDataset('public-history:det-nyk');clearHistoryVideo();render();location.hash='workspace';showPage();},
  clearVideo:clearHistoryVideo,
  async attach(url,file){state.reviewBlob=file;await loadVideoSource(url,'活塞 vs 尼克斯 · 本机原片','已保存事件 · 本机回看，不上传');},
