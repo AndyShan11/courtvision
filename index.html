@@ -14,9 +14,10 @@
    <div class="times"><label>开始（秒）<input id="start" type="number" min="0" step="0.1"></label><button type="button" id="use-start">取当前时间</button><label>结束（秒）<input id="end" type="number" min="0" step="0.1"></label><button type="button" id="use-end">取当前时间</button></div>
    <div class="actions"><button type="submit" class="primary" id="confirm">确认并保存</button><button type="button" id="reject">标记不符</button><button type="button" id="reset">撤销我的修改</button><button type="button" id="add">＋ 补漏事件</button></div>
   </form>
+  <details class="selection" id="ai"><summary>AI 分析 · 球员 / 比赛</summary><p>先双击本机“启动篮球AI”，再连接。录像不上传云端；首次连接请允许浏览器访问本地网络。</p><button id="ai-connect">连接本机 Qwen3.5</button><p id="ai-connection" role="status"></p><div id="ai-container"></div></details>
  </section>
  <aside class="panel events" aria-label="事件列表"><div class="panel-head"><h2>事件列表</h2><span id="count"></span></div>
   <div class="filters"><label>状态<select id="status"><option value="">全部</option><option value="pending">待复核</option><option value="confirmed">已确认</option><option value="rejected">标记不符</option><option value="gap">原片缺段</option></select></label><label>事件<select id="kind"><option value="">全部类型</option></select></label><input id="search" type="search" aria-label="搜索事件" placeholder="搜索球员或事件"></div>
   <div id="event-list"></div>
  </aside>
-</main><script type="module" src="./workspace.mjs"></script></body></html>
+</main><script type="module" src="./workspace.mjs"></script><script type="module" src="./ai-ui.mjs"></script></body></html>

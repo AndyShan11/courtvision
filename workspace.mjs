@@ -37,3 +37,23 @@ $('reset').onclick=safe(()=>{if(!selected)return;const added=reviews[selected.id
 $('add').onclick=safe(()=>{if(!ready)throw Error('先选择录像，再补漏');const id='manual-'+crypto.randomUUID(),r={id,description:'补漏事件',kind:'other',candidates:[],reviewWindows:[]};persist({...reviews,[id]:{state:'pending',added:r,description:r.description}});$('status').value='';$('kind').value='';$('search').value='';select(r);$('start').value=video.currentTime.toFixed(1);$('end').value=Math.min(video.duration,video.currentTime+8).toFixed(1);$('description').focus();});
 $('export').onclick=safe(()=>{const a=node('a',''),url=URL.createObjectURL(new Blob([JSON.stringify({version:1,source,rows,reviews,note:'人工复核与机器候选分开保存；不代表视觉识别真值'},null,2)],{type:'application/json'}));a.href=url;a.download='篮球事件与复核.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 const initial=revision;fetch('./history-data.json').then(r=>{if(!r.ok)throw Error('历史事件加载失败，请导入事件表');return r.text();}).then(text=>{if(revision===initial)return load(JSON.parse(text),text);}).catch(e=>tell(e.message));
+
+export async function aiContext(mode){
+ if(!selected)throw Error('先选择一个事件');
+ const current=selected,version=key,videoBlob=blob;
+ const player=String(current.player||'').trim();
+ if(mode==='player'&&!player)throw Error('该事件没有球员字段，请选择有球员姓名的事件。');
+ const available=all().filter(r=>status(r)!=='rejected'),subset=mode==='player'?available.filter(r=>r.player===current.player):available;
+ const counts={};for(const r of subset)counts[r.kind]=(counts[r.kind]||0)+1;
+ const context=JSON.stringify({title:$('match-title').textContent,scope:mode==='player'?player:'导入事件表（可能不完整）',eventCount:subset.length,eventTypeCounts:counts,note:'计数是事件条数，不是得分/出手数；不计算命中率。球员名来自事件表，并非视觉身份识别。',current:{id:current.id,description:reviews[current.id]?.description??current.description,state:status(current)},examples:subset.slice(0,20).map(r=>({id:r.id,description:reviews[r.id]?.description??r.description,state:status(r)}))}).slice(0,6400);
+ const frames=[];if(ready&&videoBlob){
+  const start=Number($('start').value),end=Number($('end').value);
+  if(!$('start').value||!$('end').value||!(end>start)||start<0||end>video.duration)throw Error('先填写当前片段的有效起止时间。');
+  if(end-start>30)throw Error('当前视觉分析请选不超过 30 秒的片段。比赛分析仍包含事件表摘要。');
+  const v=document.createElement('video');v.muted=true;v.preload='auto';
+  const wait=event=>new Promise((resolve,reject)=>{const timeout=setTimeout(()=>{cleanup();reject(Error('录像抽帧超时'));},5000);const done=()=>{cleanup();resolve();},fail=()=>{cleanup();reject(Error('录像抽帧失败'));};function cleanup(){clearTimeout(timeout);v.removeEventListener(event,done);v.removeEventListener('error',fail);}v.addEventListener(event,done,{once:true});v.addEventListener('error',fail,{once:true});});
+  try{const loaded=wait('loadeddata');v.src=videoBlob;await loaded;const canvas=document.createElement('canvas');canvas.width=512;canvas.height=Math.round(512*v.videoHeight/v.videoWidth);const ctx=canvas.getContext('2d');for(let i=0;i<4;i++){const t=start+(end-start)*(i+.5)/4;if(Math.abs(v.currentTime-t)>.001){const seeked=wait('seeked');v.currentTime=t;await seeked;}ctx.drawImage(v,0,0,canvas.width,canvas.height);frames.push({time:t,image:canvas.toDataURL('image/jpeg',.75)});}}finally{v.removeAttribute('src');v.load();}
+ }
+ if(version!==key||current!==selected||videoBlob!==blob)throw Error('材料已切换，请重新分析。');
+ return {mode,context,frames};
+}
